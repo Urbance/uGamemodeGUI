@@ -1,5 +1,6 @@
 package Listeners;
 
+import Message.MessageManagement;
 import de.urbance.main.Main;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
@@ -13,6 +14,7 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 public class Listeners implements Listener {
 
     private static YamlConfiguration yamlConfiguration = Main.yamlConfiguration;
+    private static String prefix = Main.prefix;
 
     @EventHandler
     public void clickEvent(InventoryClickEvent event) {
@@ -22,17 +24,21 @@ public class Listeners implements Listener {
             if(!(event.getCurrentItem() == null)) {
                 if (event.getCurrentItem().getType().equals(Material.APPLE)) {
                     player.setGameMode(GameMode.SURVIVAL);
+                    player.sendMessage(MessageManagement.setChatColorTranslation(prefix + "Set gamemode to survival"));
                     player.closeInventory();
                 }
                 if (event.getCurrentItem().getType().equals(Material.GOLDEN_AXE)) {
                     player.setGameMode(GameMode.CREATIVE);
+                    player.sendMessage(MessageManagement.setChatColorTranslation(prefix + "Set gamemode to creative"));
                     player.closeInventory();
                 }
                 if (event.getCurrentItem().getType().equals(Material.SPYGLASS)) {
                     player.setGameMode(GameMode.SPECTATOR);
+                    player.sendMessage(prefix + "Set gamemode to spectator");
                     player.closeInventory();
                 }
                 if (event.getCurrentItem().getType().equals(Material.IRON_SWORD)) {
+                    player.sendMessage(MessageManagement.setChatColorTranslation(prefix + "Set gamemode to adventure"));
                     player.setGameMode(GameMode.ADVENTURE);
                     player.closeInventory();
                 }
