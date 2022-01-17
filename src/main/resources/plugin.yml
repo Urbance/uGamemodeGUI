@@ -1,0 +1,12 @@
+name: uGamemodeGUI
+version: '${project.version}'
+main: de.urbance.main.Main
+api-version: 1.18
+commands:
+  gmgui:
+    description: Opens the GamemodeGUI
+permissions:
+  gmgui.open:
+    description: Permission for open the GUI
+  gmgui.reload:
+    description: Permission the reload the config
