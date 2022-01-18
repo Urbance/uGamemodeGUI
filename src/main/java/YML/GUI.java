@@ -6,8 +6,8 @@ import org.bukkit.configuration.file.YamlConfiguration;
 import java.io.File;
 
 public class GUI {
-    private static YamlConfiguration yamlConfiguration = Main.yamlConfiguration;
-    private static File gui = Main.gui;
+    private static final YamlConfiguration yamlConfiguration = Main.yamlConfiguration;
+    private static final File gui = Main.gui;
 
     public static void setDefaultValues() {
         yamlConfiguration.addDefault("gui.title", "GamemodeGUI Menu");

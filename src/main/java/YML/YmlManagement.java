@@ -9,22 +9,14 @@ import java.io.File;
 import java.io.IOException;
 
 public class YmlManagement {
-    private static YamlConfiguration yamlConfiguration = Main.yamlConfiguration;
-    private static File gui = Main.gui;
-    private static Plugin plugin = Main.getPlugin(Main.class);
+    private static final YamlConfiguration yamlConfiguration = Main.yamlConfiguration;
+    private static final File gui = Main.gui;
+    private static final Plugin plugin = Main.getPlugin(Main.class);
 
     public static void save(File file) {
         try {
             yamlConfiguration.save(file);
         } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public static void reload(File file) {
-        try {
-            yamlConfiguration.load(file);
-        } catch (IOException | InvalidConfigurationException e) {
             e.printStackTrace();
         }
     }

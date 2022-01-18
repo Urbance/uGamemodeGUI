@@ -13,8 +13,8 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 
 public class Listeners implements Listener {
 
-    private static YamlConfiguration yamlConfiguration = Main.yamlConfiguration;
-    private static String prefix = Main.prefix;
+    private static final YamlConfiguration yamlConfiguration = Main.yamlConfiguration;
+    private static final String prefix = Main.prefix;
 
     @EventHandler
     public void clickEvent(InventoryClickEvent event) {
