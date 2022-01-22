@@ -27,7 +27,7 @@ public class GmGUI implements CommandExecutor {
             if (args.length > 0) {
                 if (args[0].equalsIgnoreCase("reload") && args.length == 1) {
                     if (sender.hasPermission("gmgui.reload")) {
-                        sender.sendMessage(ChatColor.translateAlternateColorCodes('&', prefix + "&cConfigs reloaded"));
+                        sender.sendMessage(ChatColor.translateAlternateColorCodes('&', prefix + "&7Configs reloaded"));
                         YmlManagement.reloadAll();
 
                     } else {
