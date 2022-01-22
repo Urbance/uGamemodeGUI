@@ -1,6 +1,7 @@
 name: uGamemodeGUI
 version: '${project.version}'
 main: de.urbance.main.Main
+author: Martin / Urbance
 api-version: 1.18
 commands:
   gmgui:
