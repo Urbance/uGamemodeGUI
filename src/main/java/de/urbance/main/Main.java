@@ -2,6 +2,7 @@ package de.urbance.main;
 
 import Command.GmGUI;
 import Listeners.Listeners;
+import Metrics.Metrics;
 import YML.Config;
 import YML.GUI;
 import YML.YmlManagement;
@@ -22,6 +23,8 @@ public final class Main extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new Listeners(), this);
 
         getCommand("gmgui").setExecutor(new GmGUI());
+
+        Metrics metrics = new Metrics(this, 14027);
 
         loadConfig();
         loadGuiConfiguration();
