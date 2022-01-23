@@ -14,12 +14,14 @@ import java.io.File;
 public final class Main extends JavaPlugin {
 
     public static File gui = new File("plugins//uGamemodeGUI//gui.yml");
+    public static File config = new File("plugins//uGamemodeGUI//config.yml");
     public static YamlConfiguration yamlConfiguration = YamlConfiguration.loadConfiguration(gui);
-    public static String prefix = "§7[§cuGamemodeGUI§7] ";
+    private static String cmdprefix = "§7[§cuGamemodeGUI§7] ";
+    public static String prefix = "&7[&cuGamemodeGUI&7] ";
 
     @Override
     public void onEnable() {
-        Bukkit.getConsoleSender().sendMessage(prefix + "Starting up..");
+        Bukkit.getConsoleSender().sendMessage(cmdprefix + "Starting up..");
         getServer().getPluginManager().registerEvents(new Listeners(), this);
 
         getCommand("gmgui").setExecutor(new GmGUI());
@@ -32,7 +34,7 @@ public final class Main extends JavaPlugin {
 
     @Override
     public void onDisable() {
-        Bukkit.getConsoleSender().sendMessage(prefix + "Shutdown..");
+        Bukkit.getConsoleSender().sendMessage(cmdprefix + "Shutdown..");
     }
 
     public void loadGuiConfiguration() {

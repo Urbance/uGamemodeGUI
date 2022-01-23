@@ -84,6 +84,8 @@ public class GmGUI implements CommandExecutor {
             } else {
                 sender.sendMessage(MessageManagement.setChatColorTranslation(plugin.getConfig().getString("config.no_permission")));
             }
+        } else {
+            sender.sendMessage("§7[§cuGamemodeGUI§7] You cannot execute the command as a console.");
         }
         return false;
     }

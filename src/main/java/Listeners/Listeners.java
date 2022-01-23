@@ -34,7 +34,7 @@ public class Listeners implements Listener {
                 }
                 if (event.getCurrentItem().getType().equals(Material.SPYGLASS)) {
                     player.setGameMode(GameMode.SPECTATOR);
-                    player.sendMessage(prefix + "Set gamemode to spectator");
+                    player.sendMessage(MessageManagement.setChatColorTranslation(prefix + "Set gamemode to spectator"));
                     player.closeInventory();
                 }
                 if (event.getCurrentItem().getType().equals(Material.IRON_SWORD)) {

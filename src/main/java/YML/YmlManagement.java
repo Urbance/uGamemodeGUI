@@ -11,6 +11,7 @@ import java.io.IOException;
 public class YmlManagement {
     private static final YamlConfiguration yamlConfiguration = Main.yamlConfiguration;
     private static final File gui = Main.gui;
+    private static final File config = Main.config;
     private static final Plugin plugin = Main.getPlugin(Main.class);
 
     public static void save(File file) {
@@ -22,6 +23,16 @@ public class YmlManagement {
     }
 
     public static void reloadAll() {
+        if (!(gui.exists()) || !(config.exists())) {
+            if (!(gui.exists())) {
+                GUI.setDefaultValues();
+            }
+            if (!(config.exists())) {
+                Config.setDefaultValues();
+            }
+            return;
+        }
+
          plugin.reloadConfig();
         try {
             yamlConfiguration.load(gui);
