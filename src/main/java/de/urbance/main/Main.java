@@ -2,10 +2,11 @@ package de.urbance.main;
 
 import Command.GmGUI;
 import Listeners.Listeners;
-import Metrics.Metrics;
-import YML.Config;
-import YML.GUI;
-import YML.YmlManagement;
+import Utils.Metrics;
+import Utils.UpdateChecker;
+import Configs.Config;
+import Configs.GUI;
+import Utils.YmlManagement;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -27,6 +28,14 @@ public final class Main extends JavaPlugin {
         getCommand("gmgui").setExecutor(new GmGUI());
 
         Metrics metrics = new Metrics(this, 14027);
+
+        new UpdateChecker(this, 99422).getVersion(version -> {
+            if (this.getDescription().getVersion().equals(version) && getConfig().getBoolean("config.UpdateNotification")) {
+                getLogger().info("There is not a new update available.");
+            } else if (getConfig().getBoolean("config.UpdateNotification")){
+                getLogger().info("There is a new update available. Check out the plugin page!");
+            }
+        });
 
         loadConfig();
         loadGuiConfiguration();

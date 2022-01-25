@@ -1,5 +1,6 @@
-package YML;
+package Configs;
 
+import Utils.YmlManagement;
 import de.urbance.main.Main;
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.file.YamlConfiguration;

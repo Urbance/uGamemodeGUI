@@ -1,7 +1,6 @@
-package YML;
+package Configs;
 
 import de.urbance.main.Main;
-import org.bukkit.ChatColor;
 import org.bukkit.plugin.Plugin;
 
 public class Config {
@@ -10,6 +9,7 @@ public class Config {
 
     public static void setDefaultValues() {
         plugin.getConfig().addDefault("config.no_permission", prefix + "You do not have the permissions to do that!");
+        plugin.getConfig().addDefault("config.UpdateNotification", true);
         plugin.saveConfig();
     }
 

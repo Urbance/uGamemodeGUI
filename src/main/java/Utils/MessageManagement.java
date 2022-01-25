@@ -1,4 +1,4 @@
-package Message;
+package Utils;
 
 import org.bukkit.ChatColor;
 

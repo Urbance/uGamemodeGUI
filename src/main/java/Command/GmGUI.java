@@ -1,7 +1,7 @@
 package Command;
 
-import Message.MessageManagement;
-import YML.YmlManagement;
+import Utils.MessageManagement;
+import Utils.YmlManagement;
 import de.urbance.main.Main;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;

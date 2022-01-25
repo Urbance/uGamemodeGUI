@@ -1,5 +1,7 @@
-package YML;
+package Utils;
 
+import Configs.Config;
+import Configs.GUI;
 import de.urbance.main.Main;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.YamlConfiguration;

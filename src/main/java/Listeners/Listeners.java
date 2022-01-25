@@ -1,6 +1,7 @@
 package Listeners;
 
-import Message.MessageManagement;
+import Utils.MessageManagement;
+import Utils.UpdateChecker;
 import de.urbance.main.Main;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
@@ -9,6 +10,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.event.player.PlayerJoinEvent;
 
 
 public class Listeners implements Listener {
@@ -45,7 +47,6 @@ public class Listeners implements Listener {
             } else {
                 return;
             }
-
             event.setCancelled(true);
         }
 

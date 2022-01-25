@@ -1,4 +1,4 @@
-package Metrics;
+package Utils;
 
 import org.bukkit.plugin.java.JavaPlugin;
 import java.io.BufferedReader;
