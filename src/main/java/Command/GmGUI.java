@@ -10,6 +10,7 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
@@ -42,11 +43,11 @@ public class GmGUI implements CommandExecutor {
                 Player player = (Player) sender;
                 Inventory inv = Bukkit.createInventory(player, 27, MessageManagement.setChatColorTranslation(yamlConfiguration.getString("gui.title")));
 
-                ItemStack survival = new ItemStack(Material.APPLE);
-                ItemStack creative = new ItemStack(Material.GOLDEN_AXE);
-                ItemStack spectator = new ItemStack(Material.SPYGLASS);
-                ItemStack adventure = new ItemStack(Material.IRON_SWORD);
-                ItemStack empty = new ItemStack(Material.BLUE_STAINED_GLASS_PANE);
+                ItemStack survival = new ItemStack(MessageManagement.itemStack("survival"));
+                ItemStack creative = new ItemStack(MessageManagement.itemStack("creative"));
+                ItemStack spectator = new ItemStack(MessageManagement.itemStack("spectator"));
+                ItemStack adventure = new ItemStack(MessageManagement.itemStack("adventure"));
+                ItemStack empty = new ItemStack(MessageManagement.itemStack("empty"));
 
                 ItemMeta survivalMeta = survival.getItemMeta();
                 ItemMeta creativeMeta = creative.getItemMeta();

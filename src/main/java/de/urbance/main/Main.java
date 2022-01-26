@@ -49,13 +49,11 @@ public final class Main extends JavaPlugin {
         yamlConfiguration.options().copyDefaults(true);
         YmlManagement.save(gui);
         GUI.setDefaultValues();
-
     }
 
     public void loadConfig() {
         getConfig().options().copyDefaults(true);
         saveConfig();
         Config.setDefaultValues();
-
     }
 }
