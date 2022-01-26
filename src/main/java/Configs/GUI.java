@@ -23,7 +23,7 @@ public class GUI {
         yamlConfiguration.addDefault("gui.slot.ADVENTURE.name", "&eAdventure");
         yamlConfiguration.addDefault("gui.slot.ADVENTURE.item", "IRON_SWORD");
         yamlConfiguration.addDefault("gui.slot.EMPTY.name", MessageManagement.setChatColorTranslation(" "));
-        yamlConfiguration.addDefault("gui.slot.EMTPY.item", "BLUE_STAINED_GLASS_PANE");
+        yamlConfiguration.addDefault("gui.slot.EMPTY.item", "BLUE_STAINED_GLASS_PANE");
         YmlManagement.save(gui);
     }
 

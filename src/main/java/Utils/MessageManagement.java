@@ -27,7 +27,7 @@ public class MessageManagement {
                 requiredItem = yamlConfiguration.getString("gui.slot.ADVENTURE.item");
                 break;
             case "empty":
-                requiredItem = yamlConfiguration.getString("gui.slot.EMTPY.item");
+                requiredItem = yamlConfiguration.getString("gui.slot.EMPTY.item");
                 break;
         }
 
