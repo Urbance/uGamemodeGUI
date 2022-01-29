@@ -1,7 +1,7 @@
 package Utils;
 
 import Configs.Config;
-import Configs.GUI;
+import Configs.GuiConfig;
 import de.urbance.main.Main;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -27,17 +27,21 @@ public class YmlManagement {
     public static void reloadAll() {
         if (!(gui.exists()) || !(config.exists())) {
             if (!(gui.exists())) {
-                GUI.setDefaultValues();
+                GuiConfig.load();
             }
             if (!(config.exists())) {
-                Config.setDefaultValues();
+                Config.load();
             }
             return;
         }
 
-         plugin.reloadConfig();
+        plugin.reloadConfig();
+        reloadConfig(gui);
+    }
+
+    public static void reloadConfig(File file) {
         try {
-            yamlConfiguration.load(gui);
+            yamlConfiguration.load(file);
         } catch (IOException | InvalidConfigurationException e) {
             e.printStackTrace();
         }

@@ -1,13 +1,12 @@
 package de.urbance.main;
 
 import Command.GmGUI;
+import Configs.GuiConfig;
 import Listeners.Listeners;
 import Utils.Metrics;
 import Utils.UpdateChecker;
 import Configs.Config;
-import Configs.GUI;
 import Utils.YmlManagement;
-import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
 import java.io.File;
@@ -36,8 +35,8 @@ public final class Main extends JavaPlugin {
             }
         });
 
-        loadConfig();
-        loadGuiConfiguration();
+        Config.load();
+        GuiConfig.load();
     }
 
     @Override
@@ -45,15 +44,4 @@ public final class Main extends JavaPlugin {
         getLogger().info("Shutdown..");
     }
 
-    public void loadGuiConfiguration() {
-        yamlConfiguration.options().copyDefaults(true);
-        YmlManagement.save(gui);
-        GUI.setDefaultValues();
-    }
-
-    public void loadConfig() {
-        getConfig().options().copyDefaults(true);
-        saveConfig();
-        Config.setDefaultValues();
-    }
 }

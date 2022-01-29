@@ -12,10 +12,12 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
+import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.plugin.Plugin;
+import org.checkerframework.checker.units.qual.Prefix;
 
 public class GmGUI implements CommandExecutor {
     private static YamlConfiguration yamlConfiguration = Main.yamlConfiguration;
@@ -24,7 +26,7 @@ public class GmGUI implements CommandExecutor {
 
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
-        if (sender instanceof Player && cmd.getName().equalsIgnoreCase("gmgui")) {
+        if (cmd.getName().equalsIgnoreCase("gmgui")) {
             if (args.length > 0) {
                 if (args[0].equalsIgnoreCase("reload") && args.length == 1) {
                     if (sender.hasPermission("gmgui.reload")) {
@@ -32,7 +34,7 @@ public class GmGUI implements CommandExecutor {
                         YmlManagement.reloadAll();
 
                     } else {
-                        sender.sendMessage(MessageManagement.setChatColorTranslation(plugin.getConfig().getString("config.no_permission")));
+                        sender.sendMessage(MessageManagement.setChatColorTranslation(prefix + plugin.getConfig().getString("config.NoPermission")));
                     }
 
                 } else {
@@ -40,53 +42,55 @@ public class GmGUI implements CommandExecutor {
                 }
 
             } else if (sender.hasPermission("gmgui.open")) {
-                Player player = (Player) sender;
-                Inventory inv = Bukkit.createInventory(player, 27, MessageManagement.setChatColorTranslation(yamlConfiguration.getString("gui.title")));
+                if (sender instanceof Player) {
+                    Player player = (Player) sender;
+                    Inventory inv = Bukkit.createInventory(player, 27, MessageManagement.setChatColorTranslation(yamlConfiguration.getString("gui.title")));
 
-                ItemStack survival = new ItemStack(MessageManagement.itemStack("survival"));
-                ItemStack creative = new ItemStack(MessageManagement.itemStack("creative"));
-                ItemStack spectator = new ItemStack(MessageManagement.itemStack("spectator"));
-                ItemStack adventure = new ItemStack(MessageManagement.itemStack("adventure"));
-                ItemStack empty = new ItemStack(MessageManagement.itemStack("empty"));
+                    ItemStack survival = new ItemStack(MessageManagement.itemStack("survival"));
+                    ItemStack creative = new ItemStack(MessageManagement.itemStack("creative"));
+                    ItemStack spectator = new ItemStack(MessageManagement.itemStack("spectator"));
+                    ItemStack adventure = new ItemStack(MessageManagement.itemStack("adventure"));
+                    ItemStack empty = new ItemStack(MessageManagement.itemStack("empty"));
 
-                ItemMeta survivalMeta = survival.getItemMeta();
-                ItemMeta creativeMeta = creative.getItemMeta();
-                ItemMeta spectatorMeta = spectator.getItemMeta();
-                ItemMeta adventureMeta = adventure.getItemMeta();
-                ItemMeta emptyMeta = empty.getItemMeta();
+                    ItemMeta survivalMeta = survival.getItemMeta();
+                    ItemMeta creativeMeta = creative.getItemMeta();
+                    ItemMeta spectatorMeta = spectator.getItemMeta();
+                    ItemMeta adventureMeta = adventure.getItemMeta();
+                    ItemMeta emptyMeta = empty.getItemMeta();
 
-                survivalMeta.setDisplayName(MessageManagement.setChatColorTranslation((yamlConfiguration.getString("gui.slot.SURVIVAL.name"))));
-                creativeMeta.setDisplayName(MessageManagement.setChatColorTranslation((yamlConfiguration.getString("gui.slot.CREATIVE.name"))));
-                spectatorMeta.setDisplayName(MessageManagement.setChatColorTranslation((yamlConfiguration.getString("gui.slot.SPECTATOR.name"))));
-                adventureMeta.setDisplayName(MessageManagement.setChatColorTranslation((yamlConfiguration.getString("gui.slot.ADVENTURE.name"))));
-                emptyMeta.setDisplayName(" ");
+                    survivalMeta.setDisplayName(MessageManagement.setChatColorTranslation((yamlConfiguration.getString("gui.slot.SURVIVAL.name"))));
+                    creativeMeta.setDisplayName(MessageManagement.setChatColorTranslation((yamlConfiguration.getString("gui.slot.CREATIVE.name"))));
+                    spectatorMeta.setDisplayName(MessageManagement.setChatColorTranslation((yamlConfiguration.getString("gui.slot.SPECTATOR.name"))));
+                    adventureMeta.setDisplayName(MessageManagement.setChatColorTranslation((yamlConfiguration.getString("gui.slot.ADVENTURE.name"))));
+                    emptyMeta.setDisplayName(" ");
 
-                survival.setItemMeta(survivalMeta);
-                creative.setItemMeta(creativeMeta);
-                spectator.setItemMeta(spectatorMeta);
-                adventure.setItemMeta(adventureMeta);
-                empty.setItemMeta(emptyMeta);
+                    survival.setItemMeta(survivalMeta);
+                    creative.setItemMeta(creativeMeta);
+                    spectator.setItemMeta(spectatorMeta);
+                    adventure.setItemMeta(adventureMeta);
+                    empty.setItemMeta(emptyMeta);
 
 
-                int slot = 0;
-                do {
-                    if (inv.getItem(slot) == null) {
-                        inv.setItem(slot, empty);
-                    }
-                    slot = slot + 1;
-                } while (slot < 27);
+                    int slot = 0;
+                    do {
+                        if (inv.getItem(slot) == null) {
+                            inv.setItem(slot, empty);
+                        }
+                        slot = slot + 1;
+                    } while (slot < 27);
 
-                inv.setItem(10, survival);
-                inv.setItem(12, creative);
-                inv.setItem(14, spectator);
-                inv.setItem(16, adventure);
-                player.openInventory(inv);
+                    inv.setItem(10, survival);
+                    inv.setItem(12, creative);
+                    inv.setItem(14, spectator);
+                    inv.setItem(16, adventure);
+                    player.openInventory(inv);
+                } else {
+                    sender.sendMessage("§7[§cuGamemodeGUI§7] You cannot execute the command as a console.");
+                }
 
             } else {
-                sender.sendMessage(MessageManagement.setChatColorTranslation(plugin.getConfig().getString("config.no_permission")));
+                sender.sendMessage(MessageManagement.setChatColorTranslation(prefix + plugin.getConfig().getString("config.NoPermission")));
             }
-        } else {
-            sender.sendMessage("§7[§cuGamemodeGUI§7] You cannot execute the command as a console.");
         }
         return false;
     }
