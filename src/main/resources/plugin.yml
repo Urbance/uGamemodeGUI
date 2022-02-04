@@ -7,7 +7,11 @@ commands:
   gmgui:
     description: Opens the GamemodeGUI
 permissions:
+  gmgui.*:
+    description: Permissions for access to all commands
   gmgui.open:
     description: Permission for open the GUI
   gmgui.reload:
     description: Permission the reload the config
+  gmgui.editGUI:
+    description: Allows you to edit the GUi.
