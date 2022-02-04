@@ -29,22 +29,22 @@ public class Listeners implements Listener {
 
             if(!(event.getCurrentItem() == null)) {
 
-                if (currentItem.getType() == Material.valueOf(yamlConfiguration.getString("gui.slot.SURVIVAL.item"))) {
+                if (currentItem.getType() == Material.valueOf(yamlConfiguration.getString("gui.slot.SURVIVAL.item")) && event.getSlot() == 10) {
                     player.setGameMode(GameMode.SURVIVAL);
                     player.sendMessage(MessageManagement.setChatColorTranslation(prefix + "Set gamemode to survival"));
                     player.closeInventory();
                 }
-                if (currentItem.getType() == Material.valueOf(yamlConfiguration.getString("gui.slot.CREATIVE.item"))) {
+                if (currentItem.getType() == Material.valueOf(yamlConfiguration.getString("gui.slot.CREATIVE.item")) && event.getSlot() == 12) {
                     player.setGameMode(GameMode.CREATIVE);
                     player.sendMessage(MessageManagement.setChatColorTranslation(prefix + "Set gamemode to creative"));
                     player.closeInventory();
                 }
-                if (currentItem.getType() == Material.valueOf(yamlConfiguration.getString("gui.slot.SPECTATOR.item"))) {
+                if (currentItem.getType() == Material.valueOf(yamlConfiguration.getString("gui.slot.SPECTATOR.item")) && event.getSlot() == 14) {
                     player.setGameMode(GameMode.SPECTATOR);
                     player.sendMessage(MessageManagement.setChatColorTranslation(prefix + "Set gamemode to spectator"));
                     player.closeInventory();
                 }
-                if (currentItem.getType() == Material.valueOf(yamlConfiguration.getString("gui.slot.ADVENTURE.item"))) {
+                if (currentItem.getType() == Material.valueOf(yamlConfiguration.getString("gui.slot.ADVENTURE.item")) && event.getSlot() == 16) {
                     player.sendMessage(MessageManagement.setChatColorTranslation(prefix + "Set gamemode to adventure"));
                     player.setGameMode(GameMode.ADVENTURE);
                     player.closeInventory();

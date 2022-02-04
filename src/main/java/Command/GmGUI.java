@@ -76,9 +76,37 @@ public class GmGUI implements CommandExecutor {
                     }
                 }
                 break;
-            default:
-                sender.sendMessage(MessageManagement.setChatColorTranslation(prefix + "Invalid Argument!"));
-                break;
+            case "setName":
+                if (sender.hasPermission("gmgui.editGUI") || sender.hasPermission("gmgui.*")) {
+                    if (args.length == 3) {
+                        switch (args[1]) {
+                            case "survival":
+                                yamlConfiguration.set("gui.slot.SURVIVAL.name", args[2]);
+                                break;
+                            case "creative":
+                                yamlConfiguration.set("gui.slot.CREATIVE.name", args[2]);
+                                break;
+                            case "spectator":
+                                yamlConfiguration.set("gui.slot.SPECTATOR.name", args[2]);
+                                break;
+                            case "adventure":
+                                yamlConfiguration.set("gui.slot.ADVENTURE.name", args[2]);
+                                break;
+                            case "empty":
+                                yamlConfiguration.set("gui.slot.EMPTY.name", args[2]);
+                                break;
+                            default:
+                                sender.sendMessage(MessageManagement.messageCollection("invalid_argument.setName"));
+                                return;
+                        }
+                    } else {
+                        sender.sendMessage(MessageManagement.messageCollection("invalid_argument.setName"));
+                        return;
+                    }
+                    YmlManagement.save(Main.gui);
+                    player.sendMessage(MessageManagement.messageCollection("updated_name"));
+
+                }
         }
     }
 

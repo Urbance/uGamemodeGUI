@@ -37,6 +37,9 @@ public class MessageManagement {
 
     public static String messageCollection(String message) {
         switch (message) {
+            case "updated_name":
+                message = prefix + "Updated Name.";
+                break;
             case "updated_material":
                 message = prefix + "Updated Material.";
                 break;
@@ -45,6 +48,9 @@ public class MessageManagement {
                 break;
             case "invalid_argument.setTitle":
                 message = prefix + "Invalid Argument. Please type a valid title!";
+                break;
+            case "invalid_argument.setName":
+                message = prefix + "Invalid Argument. Please type a valid name!";
                 break;
             case "cannot_execute_console":
                 message = prefix + "You cannot execute the command as a console.";
