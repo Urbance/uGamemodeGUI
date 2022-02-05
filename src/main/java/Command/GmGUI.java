@@ -61,80 +61,104 @@ public class GmGUI implements CommandExecutor {
                     if (args.length == 2) {
                         setMaterial(player, args);
                     } else {
-                        sender.sendMessage(MessageManagement.setChatColorTranslation(prefix + "Invalid Argument. Do /gmgui for more help!"));
+                        sender.sendMessage(MessageManagement.messageCollection("incomplete_command.setMaterial"));
                     }
+                } else {
+                    sender.sendMessage(MessageManagement.setChatColorTranslation(prefix + plugin.getConfig().getString("config.NoPermission")));
+                    return;
                 }
                 break;
             case "setTitle":
                 if (sender.hasPermission("gmgui.editGUI") || sender.hasPermission("gmgui.*")) {
                     if (args.length == 2) {
                         yamlConfiguration.set("gui.title", args[1]);
+                        sender.sendMessage(MessageManagement.messageCollection("updated_title"));
                         YmlManagement.save(Main.gui);
                     } else {
-                        sender.sendMessage(MessageManagement.messageCollection("invalid_argument.setTitle"));
+                        sender.sendMessage(MessageManagement.messageCollection("incomplete_command.setTitle"));
                         return;
                     }
+                } else {
+                    sender.sendMessage(MessageManagement.setChatColorTranslation(prefix + plugin.getConfig().getString("config.NoPermission")));
                 }
                 break;
             case "setName":
                 if (sender.hasPermission("gmgui.editGUI") || sender.hasPermission("gmgui.*")) {
                     if (args.length == 3) {
-                        switch (args[1]) {
-                            case "survival":
-                                yamlConfiguration.set("gui.slot.SURVIVAL.name", args[2]);
-                                break;
-                            case "creative":
-                                yamlConfiguration.set("gui.slot.CREATIVE.name", args[2]);
-                                break;
-                            case "spectator":
-                                yamlConfiguration.set("gui.slot.SPECTATOR.name", args[2]);
-                                break;
-                            case "adventure":
-                                yamlConfiguration.set("gui.slot.ADVENTURE.name", args[2]);
-                                break;
-                            case "empty":
-                                yamlConfiguration.set("gui.slot.EMPTY.name", args[2]);
-                                break;
-                            default:
-                                sender.sendMessage(MessageManagement.messageCollection("invalid_argument.setName"));
-                                return;
-                        }
+                        setName(sender, args);
                     } else {
-                        sender.sendMessage(MessageManagement.messageCollection("invalid_argument.setName"));
+                        sender.sendMessage(MessageManagement.messageCollection("incomplete_command.setName"));
                         return;
                     }
                     YmlManagement.save(Main.gui);
                     player.sendMessage(MessageManagement.messageCollection("updated_name"));
 
+                } else {
+                    sender.sendMessage(MessageManagement.setChatColorTranslation(prefix + plugin.getConfig().getString("config.NoPermission")));
+                    return;
                 }
+                break;
+            default:
+                sender.sendMessage(MessageManagement.messageCollection("invalid_argument"));
+                return;
         }
     }
 
     public static void setMaterial(Player player, String[] args) {
+        String item = player.getInventory().getItemInMainHand().getType().name();
+        String path;
+
         switch (args[1]) {
             case "survival":
-                yamlConfiguration.set("gui.slot.SURVIVAL.item", player.getInventory().getItemInMainHand().getType().name());
+                path = "gui.slot.SURVIVAL.item";
                 break;
             case "creative":
-                yamlConfiguration.set("gui.slot.CREATIVE.item", player.getInventory().getItemInMainHand().getType().name());
+                path = "gui.slot.CREATIVE.item";
                 break;
             case "spectator":
-                yamlConfiguration.set("gui.slot.SPECTATOR.item", player.getInventory().getItemInMainHand().getType().name());
+                path = "gui.slot.SPECTATOR.item";
                 break;
             case "adventure":
-                yamlConfiguration.set("gui.slot.ADVENTURE.item", player.getInventory().getItemInMainHand().getType().name());
+                path = "gui.slot.ADVENTURE.item";
                 break;
             case "empty":
-                yamlConfiguration.set("gui.slot.EMPTY.item", player.getInventory().getItemInMainHand().getType().name());
+                path = "gui.slot.EMPTY.item";
                 break;
             default:
                 player.sendMessage(MessageManagement.messageCollection("invalid_argument.setMaterial"));
                 return;
         }
-        player.sendMessage(MessageManagement.messageCollection("updated_material"));
-        YmlManagement.save(Main.gui);
+        if (item != "AIR" || item == null) {
+            yamlConfiguration.set(path, player.getInventory().getItemInMainHand().getType().name());
+            player.sendMessage(MessageManagement.messageCollection("updated_material"));
+            YmlManagement.save(Main.gui);
+        } else {
+            player.sendMessage(MessageManagement.messageCollection("invalid_material.setMaterial"));
+        }
     }
 
+    public static void setName(CommandSender sender, String[] args) {
+        switch (args[1]) {
+            case "survival":
+                yamlConfiguration.set("gui.slot.SURVIVAL.name", args[2]);
+                break;
+            case "creative":
+                yamlConfiguration.set("gui.slot.CREATIVE.name", args[2]);
+                break;
+            case "spectator":
+                yamlConfiguration.set("gui.slot.SPECTATOR.name", args[2]);
+                break;
+            case "adventure":
+                yamlConfiguration.set("gui.slot.ADVENTURE.name", args[2]);
+                break;
+            case "empty":
+                yamlConfiguration.set("gui.slot.EMPTY.name", args[2]);
+                break;
+            default:
+                sender.sendMessage(MessageManagement.messageCollection("invalid_argument.setName"));
+                return;
+        }
+    }
     public static void openGUI(Player player) {
         Inventory inv = Bukkit.createInventory(player, 27, MessageManagement.setChatColorTranslation(yamlConfiguration.getString("gui.title")));
 
@@ -176,4 +200,5 @@ public class GmGUI implements CommandExecutor {
         inv.setItem(16, adventure);
         player.openInventory(inv);
     }
+
 }

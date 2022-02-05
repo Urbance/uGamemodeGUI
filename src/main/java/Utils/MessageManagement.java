@@ -43,14 +43,32 @@ public class MessageManagement {
             case "updated_material":
                 message = prefix + "Updated Material.";
                 break;
+            case "updated_title":
+                message = prefix + "Updated Title.";
+                break;
+            case "invalid_argument":
+                message = prefix + "Invalid Argument.";
+                break;
             case "invalid_argument.setMaterial":
                 message = prefix + "Invalid Argument. Use survival/creative/spectator/adventure/empty";
+                break;
+            case "invalid_material.setMaterial":
+                message = prefix + "Invalid Material. Please hold an item in your main hand!";
+                break;
+            case "incomplete_command.setMaterial":
+                message = prefix + "Incomplete Command. Use /gmgui setMaterial survival/creative/spectator/adventure/empty!";
                 break;
             case "invalid_argument.setTitle":
                 message = prefix + "Invalid Argument. Please type a valid title!";
                 break;
+            case "incomplete_command.setTitle":
+                message = prefix + "Incomplete Command. Use /gmgui setTitle yourTitle!";
+                break;
             case "invalid_argument.setName":
                 message = prefix + "Invalid Argument. Please type a valid name!";
+                break;
+            case "incomplete_command.setName":
+                message = prefix + "Incomplete Command. Use /gmgui setName survival/creative/spectator/adventure/empty yourName!";
                 break;
             case "cannot_execute_console":
                 message = prefix + "You cannot execute the command as a console.";
