@@ -46,6 +46,15 @@ public class GmGUI implements CommandExecutor {
     public static void moreThanTwoArgs(CommandSender sender, String[] args) {
         Player player = (Player) sender;
         switch (args[0]) {
+            case "version":
+                if (args.length == 1) {
+                    if (sender.hasPermission("gmgui.version") || sender.hasPermission("gmgui.*")) {
+                        sender.sendMessage(MessageManagement.messageCollection("version"));
+                    } else {
+                        sender.sendMessage(MessageManagement.setChatColorTranslation(prefix + plugin.getConfig().getString("config.NoPermission")));
+                    }
+                }
+                break;
             case "reload":
                 if (args.length == 1) {
                     if (sender.hasPermission("gmgui.reload") || sender.hasPermission("gmgui.*")) {

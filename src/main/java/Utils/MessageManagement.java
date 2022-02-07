@@ -5,10 +5,12 @@ import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.plugin.Plugin;
 
 public class MessageManagement {
     private static final YamlConfiguration yamlConfiguration = Main.yamlConfiguration;
     private static String prefix = Main.prefix;
+    private static final Plugin plugin = Main.getPlugin(Main.class);
     public static String setChatColorTranslation(String message) {
         return ChatColor.translateAlternateColorCodes('&', message);
     }
@@ -37,6 +39,9 @@ public class MessageManagement {
 
     public static String messageCollection(String message) {
         switch (message) {
+            case "version":
+                message = prefix + "Plugin Version &c" + plugin.getDescription().getVersion();
+                break;
             case "updated_name":
                 message = prefix + "Updated Name.";
                 break;
