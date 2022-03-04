@@ -1,5 +1,6 @@
 package de.urbance.main;
 
+import Command.GM;
 import Command.GmGUI;
 import Configs.GuiConfig;
 import Listeners.Listeners;
@@ -23,6 +24,7 @@ public final class Main extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new Listeners(), this);
 
         getCommand("gmgui").setExecutor(new GmGUI());
+        getCommand("gm").setExecutor(new GM());
 
         Metrics metrics = new Metrics(this, 14027);
 

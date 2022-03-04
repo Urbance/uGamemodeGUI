@@ -5,7 +5,9 @@ author: Martin / Urbance
 api-version: 1.18
 commands:
   gmgui:
-    description: Opens the GamemodeGUI
+    description: GUI Management
+  gm:
+    description: Open Gamemode GUI
 permissions:
   gmgui.*:
     description: Permissions for access to all commands
