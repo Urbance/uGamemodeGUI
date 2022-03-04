@@ -29,8 +29,26 @@ public class GmGUI implements CommandExecutor {
         Player player = (Player) sender;
         if (cmd.getName().equalsIgnoreCase("gmgui")) {
             if (args.length > 0) {
-                // TODO Better Refacotoring
-                moreThanTwoArgs(sender, args);
+                switch (args[0]) {
+                    case "version":
+                        version(args, player);
+                        break;
+                    case "reload":
+                        reload(args, player);
+                        break;
+                    case "setMaterial":
+                        setMaterial(args, player);
+                        break;
+                    case "setTitle":
+                        setTitle(args, player);
+                        break;
+                    case "setName":
+                        setName(args, player);
+                        break;
+                    default:
+                        sender.sendMessage(MessageManagement.messageCollection("invalid_argument"));
+                        break;
+                }
             } else {
                 // TODO Implement Help Command
             }
@@ -38,106 +56,97 @@ public class GmGUI implements CommandExecutor {
         return false;
     }
 
-    public static void moreThanTwoArgs(CommandSender sender, String[] args) {
-        Player player = (Player) sender;
-        switch (args[0]) {
-            case "version":
-                if (args.length == 1) {
-                    if (sender.hasPermission("gmgui.version") || sender.hasPermission("gmgui.*")) {
-                        sender.sendMessage(MessageManagement.messageCollection("version"));
-                    } else {
-                        sender.sendMessage(MessageManagement.setChatColorTranslation(prefix + plugin.getConfig().getString("config.NoPermission")));
-                    }
-                }
-                break;
-            case "reload":
-                if (args.length == 1) {
-                    if (sender.hasPermission("gmgui.reload") || sender.hasPermission("gmgui.*")) {
-                        sender.sendMessage(ChatColor.translateAlternateColorCodes('&', prefix + "&7Configs reloaded"));
-                        YmlManagement.reloadAll();
-                    } else {
-                        sender.sendMessage(MessageManagement.setChatColorTranslation(prefix + plugin.getConfig().getString("config.NoPermission")));
-                    }
-                }
-                break;
-            case "setMaterial":
-                if (sender.hasPermission("gmgui.editGUI") || sender.hasPermission("gmgui.*")) {
-                    if (args.length == 2) {
-                        setMaterial(player, args);
-                    } else {
-                        sender.sendMessage(MessageManagement.messageCollection("incomplete_command.setMaterial"));
-                    }
-                } else {
-                    sender.sendMessage(MessageManagement.setChatColorTranslation(prefix + plugin.getConfig().getString("config.NoPermission")));
-                    return;
-                }
-                break;
-            case "setTitle":
-                if (sender.hasPermission("gmgui.editGUI") || sender.hasPermission("gmgui.*")) {
-                    if (args.length == 2) {
-                        yamlConfiguration.set("gui.title", args[1]);
-                        sender.sendMessage(MessageManagement.messageCollection("updated_title"));
-                        YmlManagement.save(Main.gui);
-                    } else {
-                        sender.sendMessage(MessageManagement.messageCollection("incomplete_command.setTitle"));
-                        return;
-                    }
-                } else {
-                    sender.sendMessage(MessageManagement.setChatColorTranslation(prefix + plugin.getConfig().getString("config.NoPermission")));
-                }
-                break;
-            case "setName":
-                if (sender.hasPermission("gmgui.editGUI") || sender.hasPermission("gmgui.*")) {
-                    if (args.length == 3) {
-                        setName(sender, args);
-                    } else {
-                        sender.sendMessage(MessageManagement.messageCollection("incomplete_command.setName"));
-                        return;
-                    }
-                    YmlManagement.save(Main.gui);
-                    player.sendMessage(MessageManagement.messageCollection("updated_name"));
-
-                } else {
-                    sender.sendMessage(MessageManagement.setChatColorTranslation(prefix + plugin.getConfig().getString("config.NoPermission")));
-                    return;
-                }
-                break;
-            default:
-                sender.sendMessage(MessageManagement.messageCollection("invalid_argument"));
-                return;
+    public static void version(String[] args, Player player) {
+        if (args.length == 1) {
+            if (player.hasPermission("gmgui.version") || player.hasPermission("gmgui.*")) {
+                player.sendMessage(MessageManagement.messageCollection("version"));
+            } else {
+                player.sendMessage(MessageManagement.setChatColorTranslation(prefix + plugin.getConfig().getString("config.NoPermission")));
+            }
         }
     }
 
-    public static void setMaterial(Player player, String[] args) {
+    public static void reload(String[] args, Player player) {
+        if (args.length == 1) {
+            if (player.hasPermission("gmgui.reload") || player.hasPermission("gmgui.*")) {
+                player.sendMessage(ChatColor.translateAlternateColorCodes('&', prefix + "&7Configs reloaded"));
+                YmlManagement.reloadAll();
+            } else {
+                player.sendMessage(MessageManagement.setChatColorTranslation(prefix + plugin.getConfig().getString("config.NoPermission")));
+            }
+        }
+    }
+
+    public static void setTitle(String[] args, Player player) {
+        if (player.hasPermission("gmgui.editGUI") || player.hasPermission("gmgui.*")) {
+            if (args.length == 2) {
+                yamlConfiguration.set("gui.title", args[1]);
+                player.sendMessage(MessageManagement.messageCollection("updated_title"));
+                YmlManagement.save(Main.gui);
+            } else {
+                player.sendMessage(MessageManagement.messageCollection("incomplete_command.setTitle"));
+                return;
+            }
+        } else {
+            player.sendMessage(MessageManagement.setChatColorTranslation(prefix + plugin.getConfig().getString("config.NoPermission")));
+        }
+    }
+
+    public static void setName(String[] args, Player player) {
+        if (player.hasPermission("gmgui.editGUI") || player.hasPermission("gmgui.*")) {
+            if (args.length == 3) {
+                setName(player, args);
+            } else {
+                player.sendMessage(MessageManagement.messageCollection("incomplete_command.setName"));
+                return;
+            }
+            YmlManagement.save(Main.gui);
+            player.sendMessage(MessageManagement.messageCollection("updated_name"));
+
+        } else {
+            player.sendMessage(MessageManagement.setChatColorTranslation(prefix + plugin.getConfig().getString("config.NoPermission")));
+            return;
+        }
+    }
+
+    public static void setMaterial(String[] args, Player player) {
         String item = player.getInventory().getItemInMainHand().getType().name();
         String path;
-
-        switch (args[1]) {
-            case "survival":
-                path = "gui.slot.SURVIVAL.item";
-                break;
-            case "creative":
-                path = "gui.slot.CREATIVE.item";
-                break;
-            case "spectator":
-                path = "gui.slot.SPECTATOR.item";
-                break;
-            case "adventure":
-                path = "gui.slot.ADVENTURE.item";
-                break;
-            case "empty":
-                path = "gui.slot.EMPTY.item";
-                break;
-            default:
-                player.sendMessage(MessageManagement.messageCollection("invalid_argument.setMaterial"));
-                return;
-        }
-        if (item != "AIR" || item == null) {
-            yamlConfiguration.set(path, player.getInventory().getItemInMainHand().getType().name());
-            player.sendMessage(MessageManagement.messageCollection("updated_material"));
-            YmlManagement.save(Main.gui);
+        if (player.hasPermission("gmgui.editGUI") || player.hasPermission("gmgui.*")) {
+            if (args.length == 2) {
+                switch (args[1]) {
+                    case "survival":
+                        path = "gui.slot.SURVIVAL.item";
+                        break;
+                    case "creative":
+                        path = "gui.slot.CREATIVE.item";
+                        break;
+                    case "spectator":
+                        path = "gui.slot.SPECTATOR.item";
+                        break;
+                    case "adventure":
+                        path = "gui.slot.ADVENTURE.item";
+                        break;
+                    case "empty":
+                        path = "gui.slot.EMPTY.item";
+                        break;
+                    default:
+                        player.sendMessage(MessageManagement.messageCollection("invalid_argument.setMaterial"));
+                        return;
+                }
+                if (item != "AIR" || item == null) {
+                    yamlConfiguration.set(path, player.getInventory().getItemInMainHand().getType().name());
+                    player.sendMessage(MessageManagement.messageCollection("updated_material"));
+                    YmlManagement.save(Main.gui);
+                } else {
+                    player.sendMessage(MessageManagement.messageCollection("invalid_material.setMaterial"));
+                }
+            } else {
+                player.sendMessage(MessageManagement.messageCollection("incomplete_command.setMaterial"));
+            }
         } else {
-            player.sendMessage(MessageManagement.messageCollection("invalid_material.setMaterial"));
+            player.sendMessage(MessageManagement.setChatColorTranslation(prefix + plugin.getConfig().getString("config.NoPermission")));
+            return;
         }
     }
 
