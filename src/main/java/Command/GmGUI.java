@@ -3,6 +3,9 @@ package Command;
 import Utils.MessageManagement;
 import Utils.YmlManagement;
 import de.urbance.main.Main;
+import net.md_5.bungee.api.chat.ClickEvent;
+import net.md_5.bungee.api.chat.ComponentBuilder;
+import net.md_5.bungee.api.chat.HoverEvent;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -17,7 +20,13 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.plugin.Plugin;
+import org.checkerframework.checker.units.qual.C;
 import org.checkerframework.checker.units.qual.Prefix;
+import org.w3c.dom.Text;
+import net.md_5.bungee.api.chat.TextComponent;
+import org.bukkit.ChatColor;
+
+import java.awt.*;
 
 public class GmGUI implements CommandExecutor {
     private static YamlConfiguration yamlConfiguration = Main.yamlConfiguration;
@@ -49,8 +58,10 @@ public class GmGUI implements CommandExecutor {
                         sender.sendMessage(MessageManagement.messageCollection("invalid_argument"));
                         break;
                 }
+            } else if (player.hasPermission("gmgui.showHelp") || player.hasPermission("gmgui.*")) {
+                helpNotice(player);
             } else {
-                // TODO Implement Help Command
+                player.sendMessage(MessageManagement.setChatColorTranslation(prefix + plugin.getConfig().getString("config.NoPermission")));
             }
         }
         return false;
@@ -171,6 +182,23 @@ public class GmGUI implements CommandExecutor {
                 sender.sendMessage(MessageManagement.messageCollection("invalid_argument.setName"));
                 return;
         }
+    }
+
+    public static void helpNotice(Player player) {
+        TextComponent message = new TextComponent(MessageManagement.setChatColorTranslation("&7[&cuGamemodeGUI&7] For help and commands see "));
+        message.setColor(net.md_5.bungee.api.ChatColor.GRAY);
+
+        ComponentBuilder component = new ComponentBuilder("Left Click").bold(true).color(net.md_5.bungee.api.ChatColor.GRAY);
+
+        TextComponent pluginPage = new TextComponent(MessageManagement.setChatColorTranslation("plugin page"));
+        pluginPage.setColor(net.md_5.bungee.api.ChatColor.RED);
+        pluginPage.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, component.create()));
+        pluginPage.setClickEvent(new ClickEvent(ClickEvent.Action.OPEN_URL, "https://www.spigotmc.org/resources/ugamemodegui-configurable-1-18-open-source.99422/"));
+        pluginPage.setBold(true);
+
+        message.addExtra(pluginPage);
+
+        player.spigot().sendMessage(message);
     }
 
 }
