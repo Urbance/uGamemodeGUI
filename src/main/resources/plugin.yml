@@ -29,5 +29,5 @@ permissions:
     description: Shows the current plugin version
   gmgui.editGUI:
     description: Allows you to edit the GUi.
-  gmgui.showHelp:
+  gmgui.help:
     description: Show help

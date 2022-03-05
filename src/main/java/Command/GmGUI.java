@@ -58,7 +58,7 @@ public class GmGUI implements CommandExecutor {
                         sender.sendMessage(MessageManagement.messageCollection("invalid_argument"));
                         break;
                 }
-            } else if (player.hasPermission("gmgui.showHelp") || player.hasPermission("gmgui.*")) {
+            } else if (player.hasPermission("gmgui.help") || player.hasPermission("gmgui.*")) {
                 helpNotice(player);
             } else {
                 player.sendMessage(MessageManagement.setChatColorTranslation(prefix + plugin.getConfig().getString("config.NoPermission")));
