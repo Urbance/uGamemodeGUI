@@ -23,7 +23,7 @@ public class GM implements CommandExecutor {
         if (cmd.getName().equalsIgnoreCase("gm")) {
             if (sender instanceof Player) {
                 if (args.length == 0) {
-                    if (sender.hasPermission("gmgui.open") || sender.hasPermission("gmgui.*")) {
+                    if (sender.hasPermission("gmgui.gm.open") || sender.hasPermission("gmgui.gm.*") || sender.hasPermission("gmgui.*")) {
                         Player player = (Player) sender;
                         Inventory inv = Bukkit.createInventory(player, 27, MessageManagement.setChatColorTranslation(yamlConfiguration.getString("gui.title")));
 

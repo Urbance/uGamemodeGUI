@@ -10,24 +10,18 @@ commands:
     description: Open Gamemode GUI
 permissions:
   gmgui.*:
-    description: Permissions for access to all commands
-  gmgui.gamemode.*:
-    description: Permission to change gamemode to survival, creative, spectator, adventure via GUI
-  gmgui.gamemode.survival:
+    description: Access to all commands
+  gmgui.gm.*:
+    description: Open the GUI / Change to all available gamemodes
+  gmgui.gm.survival:
     description: Permission to change gamemode to survival via GUI
-  gmgui.gamemode.creative:
+  gmgui.gm.creative:
     description: Permission to change gamemode to creative via GUI
-  gmgui.gamemode.spectator:
+  gmgui.gm.spectator:
     description: Permission to change gamemode to spectator via GUI
-  gmgui.gamemode.adventure:
+  gmgui.gm.adventure:
     description: Permission to change gamemode to adventure via GUI
-  gmgui.open:
+  gmgui.gm.open:
     description: Permission for open the GUI
-  gmgui.reload:
-    description: Permission the reload the config
-  gmgui.version:
-    description: Shows the current plugin version
-  gmgui.editGUI:
+  gmgui.modify:
     description: Allows you to edit the GUi.
-  gmgui.help:
-    description: Show help

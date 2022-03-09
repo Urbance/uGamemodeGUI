@@ -26,7 +26,7 @@ public class Listeners implements Listener {
 
             if(!(event.getCurrentItem() == null)) {
                 if (currentItem.getType() == Material.valueOf(yamlConfiguration.getString("gui.slot.SURVIVAL.item")) && event.getSlot() == 10) {
-                    if (player.hasPermission("gmgui.gamemode.survival") || player.hasPermission("gmgui.gamemode.*") || player.hasPermission("gmgui.*")) {
+                    if (player.hasPermission("gmgui.gm.survival") || player.hasPermission("gmgui.gm.*") || player.hasPermission("gmgui.*")) {
                         player.setGameMode(GameMode.SURVIVAL);
                         player.sendMessage(MessageManagement.setChatColorTranslation(prefix + "Set gamemode to survival"));
                         player.closeInventory();
@@ -36,7 +36,7 @@ public class Listeners implements Listener {
                     }
                 }
                 if (currentItem.getType() == Material.valueOf(yamlConfiguration.getString("gui.slot.CREATIVE.item")) && event.getSlot() == 12) {
-                    if (player.hasPermission("gmgui.gamemode.creative") || player.hasPermission("gmgui.gamemode.*") || player.hasPermission("gmgui.*")) {
+                    if (player.hasPermission("gmgui.gm.creative") || player.hasPermission("gmgui.gm.*") || player.hasPermission("gmgui.*")) {
                         player.setGameMode(GameMode.CREATIVE);
                         player.sendMessage(MessageManagement.setChatColorTranslation(prefix + "Set gamemode to creative"));
                         player.closeInventory();
@@ -47,7 +47,7 @@ public class Listeners implements Listener {
 
                 }
                 if (currentItem.getType() == Material.valueOf(yamlConfiguration.getString("gui.slot.SPECTATOR.item")) && event.getSlot() == 14) {
-                    if (player.hasPermission("gmgui.gamemode.spectator") || player.hasPermission("gmgui.gamemode.*") || player.hasPermission("gmgui.*")) {
+                    if (player.hasPermission("gmgui.gm.spectator") || player.hasPermission("gmgui.gm.*") || player.hasPermission("gmgui.*")) {
                         player.setGameMode(GameMode.SPECTATOR);
                         player.sendMessage(MessageManagement.setChatColorTranslation(prefix + "Set gamemode to spectator"));
                         player.closeInventory();
@@ -58,7 +58,7 @@ public class Listeners implements Listener {
 
                 }
                 if (currentItem.getType() == Material.valueOf(yamlConfiguration.getString("gui.slot.ADVENTURE.item")) && event.getSlot() == 16) {
-                    if (player.hasPermission("gmgui.gamemode.adventure") || player.hasPermission("gmgui.gamemode.*") || player.hasPermission("gmgui.*")) {
+                    if (player.hasPermission("gmgui.gm.adventure") || player.hasPermission("gmgui.gm.*") || player.hasPermission("gmgui.*")) {
                         player.sendMessage(MessageManagement.setChatColorTranslation(prefix + "Set gamemode to adventure"));
                         player.setGameMode(GameMode.ADVENTURE);
                         player.closeInventory();
