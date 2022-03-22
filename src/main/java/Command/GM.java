@@ -9,6 +9,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.plugin.Plugin;
@@ -25,45 +26,14 @@ public class GM implements CommandExecutor {
                 if (args.length == 0) {
                     if (sender.hasPermission("gmgui.gm.open") || sender.hasPermission("gmgui.gm.*") || sender.hasPermission("gmgui.*")) {
                         Player player = (Player) sender;
-                        Inventory inv = Bukkit.createInventory(player, 27, MessageManagement.setChatColorTranslation(yamlConfiguration.getString("gui.title")));
+                        Inventory inventory = Bukkit.createInventory(player, 27, MessageManagement.setChatColorTranslation(yamlConfiguration.getString("gui.title")));
+                        setEmpty(inventory);
+                        itemGenerator(MessageManagement.setChatColorTranslation(yamlConfiguration.getString("gui.slot.SURVIVAL.name")), MessageManagement.itemStack("survival"), 10, inventory);
+                        itemGenerator(MessageManagement.setChatColorTranslation(yamlConfiguration.getString("gui.slot.CREATIVE.name")), MessageManagement.itemStack("creative"), 12, inventory);
+                        itemGenerator(MessageManagement.setChatColorTranslation(yamlConfiguration.getString("gui.slot.SPECTATOR.name")), MessageManagement.itemStack("spectator"), 14, inventory);
+                        itemGenerator(MessageManagement.setChatColorTranslation(yamlConfiguration.getString("gui.slot.ADVENTURE.name")), MessageManagement.itemStack("adventure"), 16, inventory);
 
-                        ItemStack survival = new ItemStack(MessageManagement.itemStack("survival"));
-                        ItemStack creative = new ItemStack(MessageManagement.itemStack("creative"));
-                        ItemStack spectator = new ItemStack(MessageManagement.itemStack("spectator"));
-                        ItemStack adventure = new ItemStack(MessageManagement.itemStack("adventure"));
-                        ItemStack empty = new ItemStack(MessageManagement.itemStack("empty"));
-
-                        ItemMeta survivalMeta = survival.getItemMeta();
-                        ItemMeta creativeMeta = creative.getItemMeta();
-                        ItemMeta spectatorMeta = spectator.getItemMeta();
-                        ItemMeta adventureMeta = adventure.getItemMeta();
-                        ItemMeta emptyMeta = empty.getItemMeta();
-
-                        survivalMeta.setDisplayName(MessageManagement.setChatColorTranslation((yamlConfiguration.getString("gui.slot.SURVIVAL.name"))));
-                        creativeMeta.setDisplayName(MessageManagement.setChatColorTranslation((yamlConfiguration.getString("gui.slot.CREATIVE.name"))));
-                        spectatorMeta.setDisplayName(MessageManagement.setChatColorTranslation((yamlConfiguration.getString("gui.slot.SPECTATOR.name"))));
-                        adventureMeta.setDisplayName(MessageManagement.setChatColorTranslation((yamlConfiguration.getString("gui.slot.ADVENTURE.name"))));
-                        emptyMeta.setDisplayName(" ");
-
-                        survival.setItemMeta(survivalMeta);
-                        creative.setItemMeta(creativeMeta);
-                        spectator.setItemMeta(spectatorMeta);
-                        adventure.setItemMeta(adventureMeta);
-                        empty.setItemMeta(emptyMeta);
-
-                        int slot = 0;
-                        do {
-                            if (inv.getItem(slot) == null) {
-                                inv.setItem(slot, empty);
-                            }
-                            slot = slot + 1;
-                        } while (slot < 27);
-
-                        inv.setItem(10, survival);
-                        inv.setItem(12, creative);
-                        inv.setItem(14, spectator);
-                        inv.setItem(16, adventure);
-                        player.openInventory(inv);
+                        player.openInventory(inventory);
                     } else {
                         sender.sendMessage(MessageManagement.setChatColorTranslation(prefix + plugin.getConfig().getString("config.NoPermission")));
                     }
@@ -73,5 +43,31 @@ public class GM implements CommandExecutor {
             }
         }
         return false;
+    }
+
+    private void itemGenerator(String itemName, ItemStack itemStack, Integer slot, Inventory inventory) {
+        itemStack = new ItemStack(itemStack);
+
+        ItemMeta itemMeta = itemStack.getItemMeta();
+        itemMeta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+        itemMeta.setDisplayName(itemName);
+
+        itemStack.setItemMeta(itemMeta);
+        inventory.setItem(slot, itemStack);
+    }
+
+    private void setEmpty(Inventory inventory) {
+        ItemStack empty = new ItemStack(MessageManagement.itemStack("empty"));
+        ItemMeta emptyMeta = empty.getItemMeta();
+        emptyMeta.setDisplayName(" ");
+        empty.setItemMeta(emptyMeta);
+        
+        int slot = 0;
+        do {
+            if (inventory.getItem(slot) == null) {
+                inventory.setItem(slot, empty);
+            }
+            slot = slot + 1;
+        } while (slot < 27);
     }
 }

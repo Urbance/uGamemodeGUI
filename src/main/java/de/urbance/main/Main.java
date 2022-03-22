@@ -28,14 +28,8 @@ public final class Main extends JavaPlugin {
 
         Metrics metrics = new Metrics(this, 14027);
 
-        new UpdateChecker(this, 99422).getVersion(version -> {
-            if (this.getDescription().getVersion().equals(version) && getConfig().getBoolean("config.UpdateNotification")) {
-                getLogger().info("There is not a new update available.");
-            } else if (getConfig().getBoolean("config.UpdateNotification")){
-                getLogger().info("There is a new update available. Check out the plugin page!");
-            }
-        });
 
+        checkUpdate();
         Config.load();
         GuiConfig.load();
     }
@@ -45,4 +39,14 @@ public final class Main extends JavaPlugin {
         getLogger().info("Shutdown..");
     }
 
+
+    private void checkUpdate() {
+        new UpdateChecker(this, 99422).getVersion(version -> {
+            if (this.getDescription().getVersion().equals(version) && getConfig().getBoolean("config.UpdateNotification")) {
+                getLogger().info("There is not a new update available.");
+            } else if (getConfig().getBoolean("config.UpdateNotification")){
+                getLogger().info("There is a new update available. Check out the plugin page!");
+            }
+        });
+    }
 }
