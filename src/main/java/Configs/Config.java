@@ -9,6 +9,7 @@ public class Config {
     public static void load() {
         plugin.getConfig().addDefault("config.NoPermission", "You do not have the permissions to do that!");
         plugin.getConfig().addDefault("config.UpdateNotification", true);
+        plugin.getConfig().addDefault("config.showCurrentGamemode", true);
         plugin.getConfig().options().copyDefaults(true);
         plugin.saveConfig();
     }

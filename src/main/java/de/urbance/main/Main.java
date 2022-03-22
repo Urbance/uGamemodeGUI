@@ -28,7 +28,6 @@ public final class Main extends JavaPlugin {
 
         Metrics metrics = new Metrics(this, 14027);
 
-
         checkUpdate();
         Config.load();
         GuiConfig.load();
@@ -38,7 +37,6 @@ public final class Main extends JavaPlugin {
     public void onDisable() {
         getLogger().info("Shutdown..");
     }
-
 
     private void checkUpdate() {
         new UpdateChecker(this, 99422).getVersion(version -> {

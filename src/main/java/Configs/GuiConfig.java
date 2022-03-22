@@ -1,6 +1,6 @@
 package Configs;
 
-import Utils.MessageManagement;
+import Utils.MSG;
 import Utils.YmlManagement;
 import de.urbance.main.Main;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -21,7 +21,7 @@ public class GuiConfig {
         yamlConfiguration.addDefault("gui.slot.SPECTATOR.item", "SPYGLASS");
         yamlConfiguration.addDefault("gui.slot.ADVENTURE.name", "&eAdventure");
         yamlConfiguration.addDefault("gui.slot.ADVENTURE.item", "IRON_SWORD");
-        yamlConfiguration.addDefault("gui.slot.EMPTY.name", MessageManagement.setChatColorTranslation(" "));
+        yamlConfiguration.addDefault("gui.slot.EMPTY.name", MSG.color(" "));
         yamlConfiguration.addDefault("gui.slot.EMPTY.item", "BLUE_STAINED_GLASS_PANE");
         yamlConfiguration.options().copyDefaults(true);
         YmlManagement.save(gui);

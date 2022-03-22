@@ -7,11 +7,12 @@ import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.Plugin;
 
-public class MessageManagement {
+public class MSG {
     private static final YamlConfiguration yamlConfiguration = Main.yamlConfiguration;
     private static String prefix = Main.prefix;
     private static final Plugin plugin = Main.getPlugin(Main.class);
-    public static String setChatColorTranslation(String message) {
+
+    public static String color(String message) {
         return ChatColor.translateAlternateColorCodes('&', message);
     }
 
@@ -37,7 +38,7 @@ public class MessageManagement {
         return new ItemStack(Material.valueOf(requiredItem));
     }
 
-    public static String messageCollection(String message) {
+    public static String collection(String message) {
         switch (message) {
             case "version":
                 message = prefix + "Plugin Version &c" + plugin.getDescription().getVersion();
@@ -55,25 +56,25 @@ public class MessageManagement {
                 message = prefix + "Invalid Argument.";
                 break;
             case "invalid_argument.setMaterial":
-                message = prefix + "Invalid Argument. Use survival/creative/spectator/adventure/empty";
+                message = prefix + "Invalid Argument. Pick between survival/creative/spectator/adventure/empty";
                 break;
             case "invalid_material.setMaterial":
                 message = prefix + "Invalid Material. Please hold an item in your main hand!";
                 break;
             case "incomplete_command.setMaterial":
-                message = prefix + "Incomplete Command. Use /gmgui setMaterial survival/creative/spectator/adventure/empty!";
+                message = prefix + "Incomplete Command. Use /gmgui material [survival/creative/spectator/adventure/empty]";
                 break;
             case "invalid_argument.setTitle":
                 message = prefix + "Invalid Argument. Please type a valid title!";
                 break;
             case "incomplete_command.setTitle":
-                message = prefix + "Incomplete Command. Use /gmgui setTitle yourTitle!";
+                message = prefix + "Incomplete Command. Use /gmgui title [title]";
                 break;
             case "invalid_argument.setName":
                 message = prefix + "Invalid Argument. Please type a valid name!";
                 break;
             case "incomplete_command.setName":
-                message = prefix + "Incomplete Command. Use /gmgui setName survival/creative/spectator/adventure/empty yourName!";
+                message = prefix + "Incomplete Command. Use /gmgui name [survival/creative/spectator/adventure/empty] [name]";
                 break;
             case "cannot_execute_console":
                 message = prefix + "You cannot execute the command as a console.";
@@ -82,6 +83,6 @@ public class MessageManagement {
                 message = prefix + "Error! Please contact the server owner with the error code. [cannot_locate_message]";
                 break;
         }
-        return MessageManagement.setChatColorTranslation(message);
+        return MSG.color(message);
     }
 }

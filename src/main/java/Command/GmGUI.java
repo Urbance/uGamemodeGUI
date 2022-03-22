@@ -1,32 +1,19 @@
 package Command;
 
-import Utils.MessageManagement;
+import Utils.MSG;
 import Utils.YmlManagement;
 import de.urbance.main.Main;
 import net.md_5.bungee.api.chat.ClickEvent;
 import net.md_5.bungee.api.chat.ComponentBuilder;
 import net.md_5.bungee.api.chat.HoverEvent;
-import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
-import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.YamlConfiguration;
-import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
-import org.bukkit.event.player.PlayerJoinEvent;
-import org.bukkit.inventory.Inventory;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.plugin.Plugin;
-import org.checkerframework.checker.units.qual.C;
-import org.checkerframework.checker.units.qual.Prefix;
-import org.w3c.dom.Text;
 import net.md_5.bungee.api.chat.TextComponent;
-import org.bukkit.ChatColor;
-
-import java.awt.*;
 
 public class GmGUI implements CommandExecutor {
     private static YamlConfiguration yamlConfiguration = Main.yamlConfiguration;
@@ -37,8 +24,8 @@ public class GmGUI implements CommandExecutor {
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
         Player player = (Player) sender;
         if (cmd.getName().equalsIgnoreCase("gmgui")) {
-            if (args.length > 0) {
-                if (player.hasPermission("gmgui.*") || player.hasPermission("gmgui.modify")) {
+            if (player.hasPermission("gmgui.*") || player.hasPermission("gmgui.modify")) {
+                if (args.length > 0) {
                     switch (args[0]) {
                         case "version":
                             version(args, player);
@@ -46,32 +33,41 @@ public class GmGUI implements CommandExecutor {
                         case "reload":
                             reload(args, player);
                             break;
-                        case "setMaterial":
+                        case "material":
                             setMaterial(args, player);
                             break;
-                        case "setTitle":
+                        case "title":
                             setTitle(args, player);
                             break;
-                        case "setName":
+                        case "name":
                             setName(args, player);
                             break;
                         default:
-                            sender.sendMessage(MessageManagement.messageCollection("invalid_argument"));
+                            sender.sendMessage(MSG.collection("invalid_argument"));
                             break;
                     }
-                } else if (player.hasPermission("gmgui.help") || player.hasPermission("gmgui.*")) {
-                    helpNotice(player);
                 } else {
-                    player.sendMessage(MessageManagement.setChatColorTranslation(prefix + plugin.getConfig().getString("config.NoPermission")));
+                    player.sendMessage(MSG.color("&7========= &6Help Page&7 =========\n" +
+                            "&c/gm&7 - Open GUI\n" +
+                            "&c/gmgui reload&7 - Reload plugin\n" +
+                            "&c/gmgui version&7 - Show current plugin verison\n" +
+                            "&c/gmgui material [gamemode/empty]&7 - Set material from your main hand\n" +
+                            "&c/gmgui name [gamemode] (name)&7 - Set new material name\n" +
+                            "&c/gmgui title (title)&7 - Set new GUI title\n" +
+                            "&7For detailed help check out the plugin page!\n" +
+                            "&7========= &6Help Page&7 ========="));
                 }
+            } else {
+                player.sendMessage(MSG.color(prefix + plugin.getConfig().getString("config.NoPermission")));
             }
+
         }
         return false;
     }
 
     public static void version(String[] args, Player player) {
         if (args.length == 1) {
-            player.sendMessage(MessageManagement.messageCollection("version"));
+            player.sendMessage(MSG.collection("version"));
         }
     }
 
@@ -85,10 +81,10 @@ public class GmGUI implements CommandExecutor {
     public static void setTitle(String[] args, Player player) {
         if (args.length == 2) {
             yamlConfiguration.set("gui.title", args[1]);
-            player.sendMessage(MessageManagement.messageCollection("updated_title"));
+            player.sendMessage(MSG.collection("updated_title"));
             YmlManagement.save(Main.gui);
         } else {
-            player.sendMessage(MessageManagement.messageCollection("incomplete_command.setTitle"));
+            player.sendMessage(MSG.collection("incomplete_command.setTitle"));
             return;
         }
     }
@@ -97,12 +93,11 @@ public class GmGUI implements CommandExecutor {
         if (args.length == 3) {
             setName(player, args);
         } else {
-            player.sendMessage(MessageManagement.messageCollection("incomplete_command.setName"));
+            player.sendMessage(MSG.collection("incomplete_command.setName"));
             return;
         }
         YmlManagement.save(Main.gui);
-        player.sendMessage(MessageManagement.messageCollection("updated_name"));
-
+        player.sendMessage(MSG.collection("updated_name"));
     }
 
     public static void setMaterial(String[] args, Player player) {
@@ -126,18 +121,18 @@ public class GmGUI implements CommandExecutor {
                     path = "gui.slot.EMPTY.item";
                     break;
                 default:
-                    player.sendMessage(MessageManagement.messageCollection("invalid_argument.setMaterial"));
+                    player.sendMessage(MSG.collection("invalid_argument.setMaterial"));
                     return;
             }
             if (item != "AIR" || item == null) {
                 yamlConfiguration.set(path, player.getInventory().getItemInMainHand().getType().name());
-                player.sendMessage(MessageManagement.messageCollection("updated_material"));
+                player.sendMessage(MSG.collection("updated_material"));
                 YmlManagement.save(Main.gui);
             } else {
-                player.sendMessage(MessageManagement.messageCollection("invalid_material.setMaterial"));
+                player.sendMessage(MSG.collection("invalid_material.setMaterial"));
             }
         } else {
-            player.sendMessage(MessageManagement.messageCollection("incomplete_command.setMaterial"));
+            player.sendMessage(MSG.collection("incomplete_command.setMaterial"));
         }
     }
 
@@ -159,26 +154,9 @@ public class GmGUI implements CommandExecutor {
                 yamlConfiguration.set("gui.slot.EMPTY.name", args[2]);
                 break;
             default:
-                sender.sendMessage(MessageManagement.messageCollection("invalid_argument.setName"));
+                sender.sendMessage(MSG.collection("invalid_argument.setName"));
                 return;
         }
-    }
-
-    public static void helpNotice(Player player) {
-        TextComponent message = new TextComponent(MessageManagement.setChatColorTranslation("&7[&cuGamemodeGUI&7] For help and commands see "));
-        message.setColor(net.md_5.bungee.api.ChatColor.GRAY);
-
-        ComponentBuilder component = new ComponentBuilder("Left Click").bold(true).color(net.md_5.bungee.api.ChatColor.GRAY);
-
-        TextComponent pluginPage = new TextComponent(MessageManagement.setChatColorTranslation("plugin page"));
-        pluginPage.setColor(net.md_5.bungee.api.ChatColor.RED);
-        pluginPage.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, component.create()));
-        pluginPage.setClickEvent(new ClickEvent(ClickEvent.Action.OPEN_URL, "https://www.spigotmc.org/resources/ugamemodegui-configurable-1-18-open-source.99422/"));
-        pluginPage.setBold(true);
-
-        message.addExtra(pluginPage);
-
-        player.spigot().sendMessage(message);
     }
 
 }
