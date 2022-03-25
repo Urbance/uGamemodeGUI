@@ -22,45 +22,49 @@ public class GmGUI implements CommandExecutor {
 
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
-        Player player = (Player) sender;
         if (cmd.getName().equalsIgnoreCase("gmgui")) {
-            if (player.hasPermission("gmgui.*") || player.hasPermission("gmgui.modify")) {
-                if (args.length > 0) {
-                    switch (args[0]) {
-                        case "version":
-                            version(args, player);
-                            break;
-                        case "reload":
-                            reload(args, player);
-                            break;
-                        case "material":
-                            setMaterial(args, player);
-                            break;
-                        case "title":
-                            setTitle(args, player);
-                            break;
-                        case "name":
-                            setName(args, player);
-                            break;
-                        default:
-                            sender.sendMessage(MSG.collection("invalid_argument"));
-                            break;
+            if (sender instanceof Player) {
+                Player player = (Player) sender;
+                if (player.hasPermission("gmgui.*") || player.hasPermission("gmgui.modify")) {
+                    if (args.length > 0) {
+                        switch (args[0]) {
+                            case "version":
+                                version(args, player);
+                                break;
+                            case "reload":
+                                reload(args, player);
+                                break;
+                            case "material":
+                                setMaterial(args, player);
+                                break;
+                            case "title":
+                                setTitle(args, player);
+                                break;
+                            case "name":
+                                setName(args, player);
+                                break;
+                            default:
+                                sender.sendMessage(MSG.collection("invalid_argument"));
+                                break;
+                        }
+                    } else {
+                        player.sendMessage(MSG.color("&7========= &6Help Page&7 =========\n" +
+                                "&c/gm&7 - Open GUI\n" +
+                                "&c/gmgui reload&7 - Reload plugin\n" +
+                                "&c/gmgui version&7 - Show current plugin verison\n" +
+                                "&c/gmgui material [gamemode/empty]&7 - Set material from your main hand\n" +
+                                "&c/gmgui name [gamemode] (name)&7 - Set new material name\n" +
+                                "&c/gmgui title (title)&7 - Set new GUI title\n" +
+                                "&7For detailed help check out the plugin page!\n" +
+                                "&7========= &6Help Page&7 ========="));
                     }
                 } else {
-                    player.sendMessage(MSG.color("&7========= &6Help Page&7 =========\n" +
-                            "&c/gm&7 - Open GUI\n" +
-                            "&c/gmgui reload&7 - Reload plugin\n" +
-                            "&c/gmgui version&7 - Show current plugin verison\n" +
-                            "&c/gmgui material [gamemode/empty]&7 - Set material from your main hand\n" +
-                            "&c/gmgui name [gamemode] (name)&7 - Set new material name\n" +
-                            "&c/gmgui title (title)&7 - Set new GUI title\n" +
-                            "&7For detailed help check out the plugin page!\n" +
-                            "&7========= &6Help Page&7 ========="));
+                    player.sendMessage(MSG.color(prefix + plugin.getConfig().getString("config.NoPermission")));
                 }
-            } else {
-                player.sendMessage(MSG.color(prefix + plugin.getConfig().getString("config.NoPermission")));
-            }
 
+            } else {
+                sender.sendMessage(MSG.color(prefix + MSG.collection("cannot_execute_console")));
+            }
         }
         return false;
     }

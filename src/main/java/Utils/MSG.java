@@ -77,7 +77,7 @@ public class MSG {
                 message = prefix + "Incomplete Command. Use /gmgui name [survival/creative/spectator/adventure/empty] [name]";
                 break;
             case "cannot_execute_console":
-                message = prefix + "You cannot execute the command as a console.";
+                message = prefix + "You cannot execute the command as console.";
                 break;
             default:
                 message = prefix + "Error! Please contact the server owner with the error code. [cannot_locate_message]";
