@@ -27,17 +27,7 @@ public class GM implements CommandExecutor {
         if (cmd.getName().equalsIgnoreCase("gm")) {
             if (sender instanceof Player) {
                 if (sender.hasPermission("gmgui.gm.open") || sender.hasPermission("gmgui.gm.*") || sender.hasPermission("gmgui.*")) {
-                    Player player = (Player) sender;
-
-                    Inventory inventory = Bukkit.createInventory(player, 27, MSG.color(yamlConfiguration.getString("gui.title")));
-
-                    setEmpty(inventory);
-                    itemGenerator(MSG.color(yamlConfiguration.getString("gui.slot.SURVIVAL.name")), MSG.itemStack("survival"), 10, inventory, player);
-                    itemGenerator(MSG.color(yamlConfiguration.getString("gui.slot.CREATIVE.name")), MSG.itemStack("creative"), 12, inventory, player);
-                    itemGenerator(MSG.color(yamlConfiguration.getString("gui.slot.SPECTATOR.name")), MSG.itemStack("spectator"), 14, inventory, player);
-                    itemGenerator(MSG.color(yamlConfiguration.getString("gui.slot.ADVENTURE.name")), MSG.itemStack("adventure"), 16, inventory, player);
-
-                    player.openInventory(inventory);
+                    openGUI(sender);
                 } else {
                     sender.sendMessage(MSG.color(prefix + plugin.getConfig().getString("config.NoPermission")));
                 }
@@ -48,6 +38,19 @@ public class GM implements CommandExecutor {
         return false;
     }
 
+    private void openGUI(CommandSender sender) {
+        Player player = (Player) sender;
+
+        Inventory inventory = Bukkit.createInventory(player, 27, MSG.color(yamlConfiguration.getString("gui.title")));
+
+        setEmpty(inventory);
+        itemGenerator(MSG.color(yamlConfiguration.getString("gui.slot.SURVIVAL.name")), MSG.itemStack("survival"), 10, inventory, player);
+        itemGenerator(MSG.color(yamlConfiguration.getString("gui.slot.CREATIVE.name")), MSG.itemStack("creative"), 12, inventory, player);
+        itemGenerator(MSG.color(yamlConfiguration.getString("gui.slot.SPECTATOR.name")), MSG.itemStack("spectator"), 14, inventory, player);
+        itemGenerator(MSG.color(yamlConfiguration.getString("gui.slot.ADVENTURE.name")), MSG.itemStack("adventure"), 16, inventory, player);
+
+        player.openInventory(inventory);
+    }
     private void itemGenerator(String itemName, ItemStack itemStack, Integer slot, Inventory inventory, Player player) {
         itemStack = new ItemStack(itemStack);
         setEntchantEffect(itemStack, player);
@@ -64,10 +67,11 @@ public class GM implements CommandExecutor {
         GameMode gamemode = player.getGameMode();
         Material material = itemStack.getType();
 
-        if (plugin.getConfig().getBoolean("config.showCurrentGamemode")) {
-            if (gamemode.equals(GameMode.SURVIVAL) && material == MSG.itemStack("survival").getType() || gamemode.equals(GameMode.CREATIVE) && material == MSG.itemStack("creative").getType() || gamemode.equals(GameMode.SPECTATOR) && material == MSG.itemStack("spectator").getType() || gamemode.equals(GameMode.ADVENTURE) && material == MSG.itemStack("adventure").getType()) {
-                itemStack.addUnsafeEnchantment(Enchantment.THORNS, 1);
-            }
+        if (!plugin.getConfig().getBoolean("config.showCurrentGamemode")) {
+            return;
+        }
+        if (gamemode.equals(GameMode.SURVIVAL) && material == MSG.itemStack("survival").getType() || gamemode.equals(GameMode.CREATIVE) && material == MSG.itemStack("creative").getType() || gamemode.equals(GameMode.SPECTATOR) && material == MSG.itemStack("spectator").getType() || gamemode.equals(GameMode.ADVENTURE) && material == MSG.itemStack("adventure").getType()) {
+            itemStack.addUnsafeEnchantment(Enchantment.THORNS, 1);
         }
     }
 
