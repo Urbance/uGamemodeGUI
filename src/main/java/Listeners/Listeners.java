@@ -28,7 +28,7 @@ public class Listeners implements Listener {
     }
 
     @EventHandler
-    public void handleItemStackLogic(InventoryClickEvent event) {
+    public void handleGamemodeGUI(InventoryClickEvent event) {
         String title = event.getView().getTitle();
 
         if (title.equalsIgnoreCase(yamlConfiguration.getString("gui.title"))) {
@@ -39,11 +39,11 @@ public class Listeners implements Listener {
             Material material = event.getCurrentItem().getType();
             Integer slot = event.getSlot();
 
-            handleGamemodeItemsLogic(player, material, slot);
+            handleGamemodeItemSlotLogic(player, material, slot);
         }
     }
 
-    private void handleGamemodeItemsLogic(Player player, Material material, Integer slot) {
+    private void handleGamemodeItemSlotLogic(Player player, Material material, Integer slot) {
         if (material == Material.valueOf(yamlConfiguration.getString("gui.slot.SURVIVAL.item")) && slot.equals(10)) {
             if (player.hasPermission("gmgui.gm.survival") || player.hasPermission("gmgui.gm.*") || player.hasPermission("gmgui.*")) {
                 player.setGameMode(GameMode.SURVIVAL);

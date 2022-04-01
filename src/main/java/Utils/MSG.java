@@ -41,7 +41,6 @@ public class MSG {
                 requiredItem = yamlConfiguration.getString("gui.slot.EMPTY.item");
                 break;
         }
-
         return new ItemStack(Material.valueOf(requiredItem));
     }
 
