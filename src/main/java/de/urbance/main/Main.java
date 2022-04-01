@@ -2,11 +2,11 @@ package de.urbance.main;
 
 import Command.GM;
 import Command.GmGUI;
+import Configs.Config;
 import Configs.GuiConfig;
 import Listeners.Listeners;
 import Utils.Metrics;
 import Utils.UpdateChecker;
-import Configs.Config;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
 import java.io.File;
@@ -14,9 +14,9 @@ import java.io.File;
 public final class Main extends JavaPlugin {
 
     public static File gui = new File("plugins//uGamemodeGUI//gui.yml");
-    public static File config = new File("plugins//uGamemodeGUI//config.yml");
+    private static File configFile = new File("plugins//uGamemodeGUI//config.yml");
+
     public static YamlConfiguration yamlConfiguration = YamlConfiguration.loadConfiguration(gui);
-    public static String prefix = "&7[&cuGamemodeGUI&7] ";
 
     @Override
     public void onEnable() {
@@ -28,8 +28,11 @@ public final class Main extends JavaPlugin {
 
         Metrics metrics = new Metrics(this, 14027);
 
+        if (!(configFile.exists())) {
+            Config.setConfigDefaultValues();
+        }
+
         checkUpdate();
-        Config.load();
         GuiConfig.load();
     }
 
@@ -47,4 +50,5 @@ public final class Main extends JavaPlugin {
             }
         });
     }
+
 }

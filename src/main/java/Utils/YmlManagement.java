@@ -1,6 +1,5 @@
 package Utils;
 
-import Configs.Config;
 import Configs.GuiConfig;
 import de.urbance.main.Main;
 import org.bukkit.configuration.InvalidConfigurationException;
@@ -13,8 +12,9 @@ import java.io.IOException;
 public class YmlManagement {
     private static final YamlConfiguration yamlConfiguration = Main.yamlConfiguration;
     private static final File gui = Main.gui;
-    private static final File config = Main.config;
+
     private static final Plugin plugin = Main.getPlugin(Main.class);
+    private static final File config = new File("plugins//uGamemodeGUI//config.yml");
 
     public static void save(File file) {
         try {
@@ -30,12 +30,12 @@ public class YmlManagement {
                 GuiConfig.load();
             }
             if (!(config.exists())) {
-                Config.load();
+                plugin.reloadConfig();
             }
             return;
         }
-
         plugin.reloadConfig();
+        plugin.saveConfig();
         reloadConfig(gui);
     }
 

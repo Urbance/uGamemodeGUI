@@ -18,7 +18,7 @@ import net.md_5.bungee.api.chat.TextComponent;
 public class GmGUI implements CommandExecutor {
     private static YamlConfiguration yamlConfiguration = Main.yamlConfiguration;
     private static Plugin plugin = Main.getPlugin(Main.class);
-    private static String prefix = Main.prefix;
+    String prefix = plugin.getConfig().getString("config.Prefix");
 
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
@@ -59,7 +59,7 @@ public class GmGUI implements CommandExecutor {
                                 "&7========= &6Help Page&7 ========="));
                     }
                 } else {
-                    player.sendMessage(MSG.color(prefix + plugin.getConfig().getString("config.NoPermission")));
+                    player.sendMessage(MSG.builder(prefix + plugin.getConfig().getString("config.messages.NoPermission")));
                 }
 
             } else {
@@ -75,10 +75,11 @@ public class GmGUI implements CommandExecutor {
         }
     }
 
-    public static void reload(String[] args, Player player) {
+    public void reload(String[] args, Player player) {
         if (args.length == 1) {
+            plugin.reloadConfig();
+            player.sendMessage(plugin.getConfig().getString("config.printPrefix"));
             player.sendMessage(ChatColor.translateAlternateColorCodes('&', prefix + "&7Configs reloaded"));
-            YmlManagement.reloadAll();
         }
     }
 

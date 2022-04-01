@@ -9,8 +9,15 @@ import org.bukkit.plugin.Plugin;
 
 public class MSG {
     private static final YamlConfiguration yamlConfiguration = Main.yamlConfiguration;
-    private static String prefix = Main.prefix;
     private static final Plugin plugin = Main.getPlugin(Main.class);
+    private static final String prefix = plugin.getConfig().getString("config.Prefix");
+
+    public static String builder(String message) {
+        if (plugin.getConfig().getBoolean("config.printPrefix")) {
+            return ChatColor.translateAlternateColorCodes('&', prefix + message);
+        }
+        return ChatColor.translateAlternateColorCodes('&', message);
+    }
 
     public static String color(String message) {
         return ChatColor.translateAlternateColorCodes('&', message);
