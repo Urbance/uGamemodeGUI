@@ -1,17 +1,17 @@
 package Configs;
 
+import Utils.ConfigManagement;
 import Utils.MSG;
-import Utils.YmlManagement;
 import de.urbance.main.Main;
 import org.bukkit.configuration.file.YamlConfiguration;
 
 import java.io.File;
 
 public class GuiConfig {
-    private static final YamlConfiguration yamlConfiguration = Main.yamlConfiguration;
+    private static final YamlConfiguration yamlConfiguration = Main.guiConfiguration;
     private static final File gui = Main.gui;
 
-    public static void load() {
+    public static void setValues() {
         yamlConfiguration.addDefault("gui.title", "GamemodeGUI Menu");
         yamlConfiguration.addDefault("gui.slot.SURVIVAL.name", "&eSurvival");
         yamlConfiguration.addDefault("gui.slot.SURVIVAL.item", "APPLE");
@@ -21,10 +21,10 @@ public class GuiConfig {
         yamlConfiguration.addDefault("gui.slot.SPECTATOR.item", "SPYGLASS");
         yamlConfiguration.addDefault("gui.slot.ADVENTURE.name", "&eAdventure");
         yamlConfiguration.addDefault("gui.slot.ADVENTURE.item", "IRON_SWORD");
-        yamlConfiguration.addDefault("gui.slot.EMPTY.name", MSG.color(" "));
+        yamlConfiguration.addDefault("gui.slot.EMPTY.name", MSG.createMessage(" "));
         yamlConfiguration.addDefault("gui.slot.EMPTY.item", "BLUE_STAINED_GLASS_PANE");
         yamlConfiguration.options().copyDefaults(true);
-        YmlManagement.save(gui);
+        ConfigManagement.save(gui);
     }
 
 }

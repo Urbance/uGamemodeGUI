@@ -8,18 +8,18 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.Plugin;
 
 public class MSG {
-    private static final YamlConfiguration yamlConfiguration = Main.yamlConfiguration;
-    private static final Plugin plugin = Main.getPlugin(Main.class);
-    private static final String prefix = plugin.getConfig().getString("config.Prefix");
+    private static final YamlConfiguration yamlConfiguration = Main.guiConfiguration;
+    private static final String pluginPrefix = Main.pluginPrefix;
+    private static Plugin plugin = Main.getPlugin(Main.class);
 
-    public static String builder(String message) {
+    public static String createCostumMessage(String message) {
         if (plugin.getConfig().getBoolean("config.printPrefix")) {
-            return ChatColor.translateAlternateColorCodes('&', prefix + message);
+            return ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("config.Prefix") + message);
         }
         return ChatColor.translateAlternateColorCodes('&', message);
     }
 
-    public static String color(String message) {
+    public static String createMessage(String message) {
         return ChatColor.translateAlternateColorCodes('&', message);
     }
 
@@ -47,48 +47,48 @@ public class MSG {
     public static String collection(String message) {
         switch (message) {
             case "version":
-                message = prefix + "Plugin Version &c" + plugin.getDescription().getVersion();
+                message = pluginPrefix + "Plugin Version &c" + plugin.getDescription().getVersion();
                 break;
             case "updated_name":
-                message = prefix + "Updated Name.";
+                message = pluginPrefix + "Updated Name.";
                 break;
             case "updated_material":
-                message = prefix + "Updated Material.";
+                message = pluginPrefix + "Updated Material.";
                 break;
             case "updated_title":
-                message = prefix + "Updated Title.";
+                message = pluginPrefix + "Updated Title.";
                 break;
             case "invalid_argument":
-                message = prefix + "Invalid Argument.";
+                message = pluginPrefix + "Invalid Argument.";
                 break;
             case "invalid_argument.setMaterial":
-                message = prefix + "Invalid Argument. Pick between survival/creative/spectator/adventure/empty";
+                message = pluginPrefix + "Invalid Argument. Pick between survival/creative/spectator/adventure/empty";
                 break;
             case "invalid_material.setMaterial":
-                message = prefix + "Invalid Material. Please hold an item in your main hand!";
+                message = pluginPrefix + "Invalid Material. Please hold an item in your main hand!";
                 break;
             case "incomplete_command.setMaterial":
-                message = prefix + "Incomplete Command. Use /gmgui material [survival/creative/spectator/adventure/empty]";
+                message = pluginPrefix + "Incomplete Command. Use /gmgui material [survival/creative/spectator/adventure/empty]";
                 break;
             case "invalid_argument.setTitle":
-                message = prefix + "Invalid Argument. Please type a valid title!";
+                message = pluginPrefix + "Invalid Argument. Please type a valid title!";
                 break;
             case "incomplete_command.setTitle":
-                message = prefix + "Incomplete Command. Use /gmgui title [title]";
+                message = pluginPrefix + "Incomplete Command. Use /gmgui title [title]";
                 break;
             case "invalid_argument.setName":
-                message = prefix + "Invalid Argument. Please type a valid name!";
+                message = pluginPrefix + "Invalid Argument. Please type a valid name!";
                 break;
             case "incomplete_command.setName":
-                message = prefix + "Incomplete Command. Use /gmgui name [survival/creative/spectator/adventure/empty] [name]";
+                message = pluginPrefix + "Incomplete Command. Use /gmgui name [survival/creative/spectator/adventure/empty] [name]";
                 break;
             case "cannot_execute_console":
-                message = prefix + "You cannot execute the command as console.";
+                message = pluginPrefix + "You cannot execute the command as console.";
                 break;
             default:
-                message = prefix + "Error! Please contact the server owner with the error code. [cannot_locate_message]";
+                message = pluginPrefix + "Error! Please contact the server owner with the error code. [cannot_locate_message]";
                 break;
         }
-        return MSG.color(message);
+        return MSG.createMessage(message);
     }
 }

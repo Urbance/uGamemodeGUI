@@ -16,19 +16,19 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.plugin.Plugin;
 
 public class GUI {
-    static YamlConfiguration yamlConfiguration = Main.yamlConfiguration;
+    static YamlConfiguration yamlConfiguration = Main.guiConfiguration;
     static Plugin plugin = Main.getPlugin(Main.class);
     public static void openGUI(CommandSender sender) {
 
         Player player = (Player) sender;
 
-        Inventory inventory = Bukkit.createInventory(player, 27, MSG.color(yamlConfiguration.getString("gui.title")));
+        Inventory inventory = Bukkit.createInventory(player, 27, MSG.createMessage(yamlConfiguration.getString("gui.title")));
 
         setEmpty(inventory);
-        itemGenerator(MSG.color(yamlConfiguration.getString("gui.slot.SURVIVAL.name")), MSG.itemStack("survival"), 10, inventory, player);
-        itemGenerator(MSG.color(yamlConfiguration.getString("gui.slot.CREATIVE.name")), MSG.itemStack("creative"), 12, inventory, player);
-        itemGenerator(MSG.color(yamlConfiguration.getString("gui.slot.SPECTATOR.name")), MSG.itemStack("spectator"), 14, inventory, player);
-        itemGenerator(MSG.color(yamlConfiguration.getString("gui.slot.ADVENTURE.name")), MSG.itemStack("adventure"), 16, inventory, player);
+        itemGenerator(MSG.createMessage(yamlConfiguration.getString("gui.slot.SURVIVAL.name")), MSG.itemStack("survival"), 10, inventory, player);
+        itemGenerator(MSG.createMessage(yamlConfiguration.getString("gui.slot.CREATIVE.name")), MSG.itemStack("creative"), 12, inventory, player);
+        itemGenerator(MSG.createMessage(yamlConfiguration.getString("gui.slot.SPECTATOR.name")), MSG.itemStack("spectator"), 14, inventory, player);
+        itemGenerator(MSG.createMessage(yamlConfiguration.getString("gui.slot.ADVENTURE.name")), MSG.itemStack("adventure"), 16, inventory, player);
 
         player.openInventory(inventory);
     }

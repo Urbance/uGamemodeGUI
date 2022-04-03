@@ -13,9 +13,10 @@ import org.bukkit.plugin.Plugin;
 
 public class Listeners implements Listener {
 
-    private static final YamlConfiguration yamlConfiguration = Main.yamlConfiguration;
+    private static final YamlConfiguration yamlConfiguration = Main.guiConfiguration;
+    private static YamlConfiguration messagesConfiguration = Main.messagesConfiguration;
     private static final Plugin plugin = Main.getPlugin(Main.class);
-    private static final String prefix = plugin.getConfig().getString("config.Prefix");
+    private static String costumPrefix = plugin.getConfig().getString("config.Prefix");
 
     @EventHandler
     public void blockItemMove(InventoryClickEvent event) {
@@ -47,37 +48,37 @@ public class Listeners implements Listener {
         if (material == Material.valueOf(yamlConfiguration.getString("gui.slot.SURVIVAL.item")) && slot.equals(10)) {
             if (player.hasPermission("gmgui.gm.survival") || player.hasPermission("gmgui.gm.*") || player.hasPermission("gmgui.*")) {
                 player.setGameMode(GameMode.SURVIVAL);
-                player.sendMessage(MSG.builder(plugin.getConfig().getString("config.messages.ChangeSurvival")));
+                player.sendMessage(MSG.createCostumMessage(messagesConfiguration.getString("messages.ChangeSurvival")));
             } else {
-                player.sendMessage(MSG.builder(prefix + plugin.getConfig().getString("config.messages.NoPermission")));
+                player.sendMessage(MSG.createCostumMessage(messagesConfiguration.getString("messages.NoPermission")));
             }
             player.closeInventory();
         }
         if (material.equals(Material.valueOf(yamlConfiguration.getString("gui.slot.CREATIVE.item"))) && slot.equals(12)) {
             if (player.hasPermission("gmgui.gm.creative") || player.hasPermission("gmgui.gm.*") || player.hasPermission("gmgui.*")) {
                 player.setGameMode(GameMode.CREATIVE);
-                player.sendMessage(MSG.builder(plugin.getConfig().getString("config.messages.ChangeCreative")));
+                player.sendMessage(MSG.createCostumMessage(messagesConfiguration.getString("messages.ChangeCreative")));
             } else {
-                player.sendMessage(MSG.builder(prefix + plugin.getConfig().getString("config.messages.NoPermission")));
+                player.sendMessage(MSG.createCostumMessage(messagesConfiguration.getString("messages.NoPermission")));
             }
             player.closeInventory();
         }
         if (material.equals(Material.valueOf(yamlConfiguration.getString("gui.slot.SPECTATOR.item"))) && slot.equals(14)) {
             if (player.hasPermission("gmgui.gm.spectator") || player.hasPermission("gmgui.gm.*") || player.hasPermission("gmgui.*")) {
                 player.setGameMode(GameMode.SPECTATOR);
-                player.sendMessage(MSG.builder(plugin.getConfig().getString("config.messages.ChangeSpectator")));
+                player.sendMessage(MSG.createCostumMessage(messagesConfiguration.getString("messages.ChangeSpectator")));
 
             } else {
-                player.sendMessage(MSG.builder(prefix + plugin.getConfig().getString("config.messages.NoPermission")));
+                player.sendMessage(MSG.createCostumMessage(messagesConfiguration.getString("messages.NoPermission")));
             }
             player.closeInventory();
         }
         if (material.equals(Material.valueOf(yamlConfiguration.getString("gui.slot.ADVENTURE.item"))) && slot.equals(16)) {
             if (player.hasPermission("gmgui.gm.adventure") || player.hasPermission("gmgui.gm.*") || player.hasPermission("gmgui.*")) {
-                player.sendMessage(MSG.builder(plugin.getConfig().getString("config.messages.ChangeAdventure")));
+                player.sendMessage(MSG.createCostumMessage(messagesConfiguration.getString("messages.ChangeAdventure")));
                 player.setGameMode(GameMode.ADVENTURE);
             } else {
-                player.sendMessage(MSG.builder(prefix + plugin.getConfig().getString("config.messages.NoPermission")));
+                player.sendMessage(MSG.createCostumMessage(messagesConfiguration.getString("messages.NoPermission")));
             }
             player.closeInventory();
         }
