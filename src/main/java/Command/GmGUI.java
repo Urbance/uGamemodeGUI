@@ -57,7 +57,7 @@ public class GmGUI implements CommandExecutor {
                 }
 
             } else {
-                sender.sendMessage(MSG.createMessage(pluginPrefix + MSG.collection("cannot_execute_console")));
+                sender.sendMessage(MSG.createMessage(MSG.collection("cannot_execute_console")));
             }
         }
         return false;
@@ -185,7 +185,7 @@ public class GmGUI implements CommandExecutor {
         player.spigot().sendMessage(captionChangelog);
 
 
-        TextComponent captionSupport = new TextComponent("§7Get Support ");
+        TextComponent captionSupport = new TextComponent("§7Get Support: ");
 
         TextComponent linkSupport = new TextComponent("Join my Discord");
         linkSupport.setColor(ChatColor.YELLOW);
