@@ -1,4 +1,4 @@
-package Command;
+package Command.GMGUI;
 
 import Utils.ConfigManagement;
 import Utils.MSG;
@@ -24,44 +24,44 @@ public class GmGUI implements CommandExecutor, TabCompleter {
     private static Plugin plugin = Main.getPlugin(Main.class);
     private static String pluginPrefix = Main.pluginPrefix;
 
-    YamlConfiguration messagesConfiguration = Main.messagesConfiguration;
-
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
         if (cmd.getName().equalsIgnoreCase("gmgui")) {
-            if (sender instanceof Player) {
-                Player player = (Player) sender;
-                if (player.hasPermission("gmgui.*") || player.hasPermission("gmgui.modify")) {
-                    if (args.length > 0) {
-                        switch (args[0]) {
-                            case "version":
-                                version(args, player);
-                                break;
-                            case "reload":
-                                reload(args, player);
-                                break;
-                            case "material":
-                                setMaterial(args, player);
-                                break;
-                            case "title":
-                                setTitle(args, player);
-                                break;
-                            case "name":
-                                setName(args, player);
-                                break;
-                            default:
-                                sender.sendMessage(MSG.collection("invalid_argument"));
-                                break;
-                        }
-                    } else {
-                        createAndSendHelpMessage(player);
-                    }
-                } else {
-                    player.sendMessage(MSG.createCostumMessage(messagesConfiguration.getString("messages.NoPermission")));
-                }
+            if (!(sender instanceof Player)) {
+                MSG.sendError(sender, "CANNOT_EXECUTE_AS_CONSOLE");
+                return false;
+            }
 
-            } else {
-                sender.sendMessage(MSG.createMessage(MSG.collection("cannot_execute_console")));
+            if (!(sender.hasPermission("gmgui.*") || sender.hasPermission("gmgui.modify"))) {
+                MSG.sendError(sender, "NO_PERMISSION");
+                return false;
+            }
+
+            if (!(args.length > 0)) {
+                sendInfoPage(sender);
+                return false;
+            }
+
+            Player player = (Player) sender;
+            switch (args[0]) {
+                case "version":
+                    version(args, player);
+                    break;
+                case "reload":
+                    reload(args, player);
+                    break;
+                case "material":
+                    setMaterial(args, player);
+                    break;
+                case "title":
+                    setTitle(args, player);
+                    break;
+                case "name":
+                    setName(args, player);
+                    break;
+                default:
+                    sender.sendMessage(MSG.collection("invalid_argument"));
+                    break;
             }
         }
         return false;
@@ -73,15 +73,16 @@ public class GmGUI implements CommandExecutor, TabCompleter {
         }
 
         String currentVersionStatus = "&2You have the newest version!";
+
         if (!Main.currentVersionInUse) {
             currentVersionStatus = "&cYou have an outdated version!";
         }
-
         player.sendMessage(MSG.createMessage(pluginPrefix + "Plugin Version &6" + plugin.getDescription().getVersion() + " &7- " + currentVersionStatus));
     }
 
     public void reload(String[] args, Player player) {
         if (!(args.length == 1)) {
+            return;
         }
 
         ConfigManagement.reloadAll();
@@ -171,8 +172,8 @@ public class GmGUI implements CommandExecutor, TabCompleter {
         }
     }
 
-    private static void createAndSendHelpMessage(Player player) {
-        player.sendMessage(MSG.createMessage("&7========= &6Help Page&7 =========\n" +
+    private static void sendInfoPage(CommandSender sender) {
+        sender.sendMessage(MSG.createMessage("&7========= &6Help Page&7 =========\n" +
                 "&c/gm&7 - Open GUI\n" +
                 "&c/gmgui reload&7 - Reload plugin\n" +
                 "&c/gmgui version&7 - Show current plugin verison\n" +
@@ -191,7 +192,7 @@ public class GmGUI implements CommandExecutor, TabCompleter {
         linkChangelog.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder("§cClick!").create()));
 
         captionChangelog.addExtra(linkChangelog);
-        player.spigot().sendMessage(captionChangelog);
+        sender.spigot().sendMessage(captionChangelog);
 
 
         TextComponent captionSupport = new TextComponent("§7Get Support: ");
@@ -204,9 +205,9 @@ public class GmGUI implements CommandExecutor, TabCompleter {
         linkSupport.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder("§cClick!").create()));
 
         captionSupport.addExtra(linkSupport);
-        player.spigot().sendMessage(captionSupport);
+        sender.spigot().sendMessage(captionSupport);
 
-        player.sendMessage(MSG.createMessage("&7========= &6Help Page&7 ========="));
+        sender.sendMessage(MSG.createMessage("&7========= &6Help Page&7 ========="));
     }
 
     @Override

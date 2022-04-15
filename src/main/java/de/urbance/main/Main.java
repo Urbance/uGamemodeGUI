@@ -1,14 +1,13 @@
 package de.urbance.main;
 
 import Command.GM;
-import Command.GmGUI;
+import Command.GMGUI.GmGUI;
 import Configs.Config;
 import Configs.GuiConfig;
 import Configs.Messages;
 import Listeners.Listeners;
 import Utils.Metrics;
 import Utils.UpdateChecker;
-import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
 

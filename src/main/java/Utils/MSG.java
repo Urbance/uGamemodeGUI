@@ -1,8 +1,10 @@
 package Utils;
 
 import de.urbance.main.Main;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
+import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.Plugin;
@@ -11,6 +13,7 @@ public class MSG {
     private static final YamlConfiguration yamlConfiguration = Main.guiConfiguration;
     private static final String pluginPrefix = Main.pluginPrefix;
     private static Plugin plugin = Main.getPlugin(Main.class);
+    private static YamlConfiguration messagesConfiguration = Main.messagesConfiguration;
 
     public static String createCostumMessage(String message) {
         if (plugin.getConfig().getBoolean("config.printPrefix")) {
@@ -21,6 +24,25 @@ public class MSG {
 
     public static String createMessage(String message) {
         return ChatColor.translateAlternateColorCodes('&', message);
+    }
+
+    public static void sendMessage(String playerName, String message) {
+        Bukkit.getPlayer(playerName).sendMessage(ChatColor.translateAlternateColorCodes('&', pluginPrefix + message));
+    }
+
+    public static void sendError(CommandSender sender, String errorType) {
+
+        switch (errorType) {
+            case "CANNOT_EXECUTE_AS_CONSOLE":
+                Bukkit.getLogger().info("§7You cannot execute the command as console.");
+                break;
+            case "NO_PERMISSION":
+                sendMessage(sender.getName(), messagesConfiguration.getString("messages.NoPermission"));
+                break;
+            default:
+                sendMessage(sender.getName(), "&7Whoops! There is an error!");
+        }
+
     }
 
     public static ItemStack itemStack(String requiredItem) {
