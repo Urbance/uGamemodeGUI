@@ -46,9 +46,6 @@ public class MSG {
 
     public static String collection(String message) {
         switch (message) {
-            case "version":
-                message = pluginPrefix + "Plugin Version &c" + plugin.getDescription().getVersion();
-                break;
             case "updated_name":
                 message = pluginPrefix + "Updated Name.";
                 break;
@@ -78,9 +75,6 @@ public class MSG {
                 break;
             case "invalid_argument.setName":
                 message = pluginPrefix + "Invalid Argument. Please type a valid name!";
-                break;
-            case "incomplete_command.setName":
-                message = pluginPrefix + "Incomplete Command. Use /gmgui name [survival/creative/spectator/adventure/empty] [name]";
                 break;
             case "cannot_execute_console":
                 message = pluginPrefix + "You cannot execute the command as console.";

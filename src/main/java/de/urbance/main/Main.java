@@ -8,6 +8,7 @@ import Configs.Messages;
 import Listeners.Listeners;
 import Utils.Metrics;
 import Utils.UpdateChecker;
+import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -15,6 +16,7 @@ import java.io.File;
 
 public final class Main extends JavaPlugin {
 
+    public static boolean currentVersionInUse;
     public static String pluginPrefix = "&7[&cuGamemodeGUI&7] ";
     public static File gui = new File("plugins//uGamemodeGUI//gui.yml");
     public static File messages = new File("plugins//uGamemodeGUI//messages.yml");
@@ -50,8 +52,10 @@ public final class Main extends JavaPlugin {
         new UpdateChecker(this, 99422).getVersion(version -> {
             if (this.getDescription().getVersion().equals(version) && getConfig().getBoolean("config.UpdateNotification")) {
                 getLogger().info("There is not a new update available.");
+                currentVersionInUse = true;
             } else if (getConfig().getBoolean("config.UpdateNotification")){
                 getLogger().info("There is a new update available. Check out the plugin page!");
+                currentVersionInUse = false;
             }
         });
     }
