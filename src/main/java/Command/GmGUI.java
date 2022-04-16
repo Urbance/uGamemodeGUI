@@ -1,4 +1,4 @@
-package Command.GMGUI;
+package Command;
 
 import Utils.ConfigManagement;
 import Utils.MSG;
@@ -7,12 +7,14 @@ import net.md_5.bungee.api.chat.ClickEvent;
 import net.md_5.bungee.api.chat.ComponentBuilder;
 import net.md_5.bungee.api.chat.HoverEvent;
 import net.md_5.bungee.api.ChatColor;
+import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.Plugin;
 import net.md_5.bungee.api.chat.TextComponent;
 
@@ -60,8 +62,8 @@ public class GmGUI implements CommandExecutor, TabCompleter {
                     setName(args, player);
                     break;
                 default:
-                    sender.sendMessage(MSG.collection("invalid_argument"));
-                    break;
+                    MSG.sendMessage(player.getName(), "&7Invalid argument! Use &6/gmgui &7for more informations!");
+                    return false;
             }
         }
         return false;
@@ -88,27 +90,23 @@ public class GmGUI implements CommandExecutor, TabCompleter {
         ConfigManagement.reloadAll();
         plugin.reloadConfig();
 
-        player.sendMessage(ChatColor.translateAlternateColorCodes('&', pluginPrefix + "&7Configs reloaded"));
+        MSG.sendMessage(player.getName(), "&7Configs reloaded");
     }
 
     private static void setTitle(String[] args, Player player) {
-        if (args.length == 2) {
-            yamlConfiguration.set("gui.title", args[1]);
-            player.sendMessage(MSG.collection("updated_title"));
-            ConfigManagement.save(Main.gui);
-        } else {
-            player.sendMessage(MSG.collection("incomplete_command.setTitle"));
+        if (!(args.length == 2)) {
+            MSG.sendMessage(player.getName(), "&7Incomplete Command! Use /gmgui title (title)");
+            return;
         }
+
+        yamlConfiguration.set("gui.title", args[1]);
+        MSG.sendMessage(player.getName(), "&7Updated Title.");
+        ConfigManagement.save(Main.gui);
     }
 
     private static void setName(String[] args, Player player) {
         if (!(args.length == 3)) {
-            player.sendMessage(MSG.createMessage(pluginPrefix + "&7Incomplete Command. Use /gmgui name [survival/creative/spectator/adventure] (name)"));
-            return;
-        }
-
-        if (!(args[1].equalsIgnoreCase("survival") || args[1].equalsIgnoreCase("creative") || args[1].equalsIgnoreCase("spectator") || args[1].equalsIgnoreCase("adventure"))) {
-            player.sendMessage(MSG.createMessage(pluginPrefix + "&7Invalid Argument! Please use survival/creative/spectator/adventure instead of &6" + args[1] + "&7!"));
+            MSG.sendMessage(player.getName(), "&7Incomplete Command. Use /gmgui name [survival/creative/spectator/adventure] (name)");
             return;
         }
 
@@ -126,47 +124,52 @@ public class GmGUI implements CommandExecutor, TabCompleter {
                 yamlConfiguration.set("gui.slot.ADVENTURE.name", args[2]);
                 break;
             default:
-                player.sendMessage(MSG.collection("invalid_argument.setName"));
+                MSG.sendMessage(player.getName(), "&7Invalid Argument! Please use survival/creative/spectator/adventure instead of &6" + args[1] + "&7!");
+                return;
         }
 
         ConfigManagement.save(Main.gui);
-        player.sendMessage(MSG.collection("updated_name"));
+        MSG.sendMessage(player.getName(), "&7Updated Name.");
     }
 
     private static void setMaterial(String[] args, Player player) {
-        String itemInMainHand = player.getInventory().getItemInMainHand().getType().name();
-        String path = null;
-        
-        if (args.length == 2) {
-            switch (args[1]) {
-                case "survival":
-                    path = "gui.slot.SURVIVAL.item";
-                    break;
-                case "creative":
-                    path = "gui.slot.CREATIVE.item";
-                    break;
-                case "spectator":
-                    path = "gui.slot.SPECTATOR.item";
-                    break;
-                case "adventure":
-                    path = "gui.slot.ADVENTURE.item";
-                    break;
-                case "empty":
-                    path = "gui.slot.EMPTY.item";
-                    break;
-                default:
-                    player.sendMessage(MSG.collection("invalid_argument.setMaterial"));
-            }
-            if (itemInMainHand != "AIR" || itemInMainHand == null) {
-                yamlConfiguration.set(path, player.getInventory().getItemInMainHand().getType().name());
-                player.sendMessage(MSG.collection("updated_material"));
-                ConfigManagement.save(Main.gui);
-            } else {
-                player.sendMessage(MSG.collection("invalid_material.setMaterial"));
-            }
-        } else {
+        ItemStack itemInMainHand = player.getInventory().getItemInMainHand();
+        String path;
 
+        if (!(args.length == 2)) {
+            MSG.sendMessage(player.getName(), "Incomplete Command! Use /gmgui material [survival/creative/spectator/adventure/empty]");
+            return;
         }
+
+        switch (args[1]) {
+            case "survival":
+                path = "gui.slot.SURVIVAL.item";
+                break;
+            case "creative":
+                path = "gui.slot.CREATIVE.item";
+                break;
+            case "spectator":
+                path = "gui.slot.SPECTATOR.item";
+                break;
+            case "adventure":
+                path = "gui.slot.ADVENTURE.item";
+                break;
+            case "empty":
+                path = "gui.slot.EMPTY.item";
+                break;
+            default:
+               MSG.sendMessage(player.getName(), "&7Invalid Argument. Pick between survival/creative/spectator/adventure/empty");
+               return;
+        }
+
+        if (itemInMainHand.getType().equals(Material.AIR)) {
+            MSG.sendMessage(player.getName(), "Invalid Material. Please hold an item in your main hand!");
+            return;
+        }
+
+        yamlConfiguration.set(path, itemInMainHand.getType().name());
+        MSG.sendMessage(player.getName(), "&7Updated Material.");
+        ConfigManagement.save(Main.gui);
     }
 
     private static void sendInfoPage(CommandSender sender) {

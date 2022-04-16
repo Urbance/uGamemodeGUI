@@ -25,7 +25,7 @@ public class GM implements CommandExecutor {
                     sender.sendMessage(MSG.createCostumMessage(messagesConfiguration.getString("messages.NoPermission")));
                 }
             } else {
-                sender.sendMessage(MSG.collection("cannot_execute_console"));
+                MSG.sendError(sender, "CANNOT_EXECUTE_AS_CONSOLE");
             }
         }
         return false;

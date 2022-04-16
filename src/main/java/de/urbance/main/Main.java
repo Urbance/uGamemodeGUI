@@ -1,7 +1,7 @@
 package de.urbance.main;
 
 import Command.GM;
-import Command.GMGUI.GmGUI;
+import Command.GmGUI;
 import Configs.Config;
 import Configs.GuiConfig;
 import Configs.Messages;

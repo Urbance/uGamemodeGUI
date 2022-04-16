@@ -34,13 +34,13 @@ public class MSG {
 
         switch (errorType) {
             case "CANNOT_EXECUTE_AS_CONSOLE":
-                Bukkit.getLogger().info("§7You cannot execute the command as console.");
+                Bukkit.getLogger().info("You cannot execute the command as console.");
                 break;
             case "NO_PERMISSION":
                 sendMessage(sender.getName(), messagesConfiguration.getString("messages.NoPermission"));
                 break;
             default:
-                sendMessage(sender.getName(), "&7Whoops! There is an error!");
+                sendMessage(sender.getName(), "&7Whoops! There is an unknown error!");
         }
 
     }
@@ -64,47 +64,5 @@ public class MSG {
                 break;
         }
         return new ItemStack(Material.valueOf(requiredItem));
-    }
-
-    public static String collection(String message) {
-        switch (message) {
-            case "updated_name":
-                message = pluginPrefix + "Updated Name.";
-                break;
-            case "updated_material":
-                message = pluginPrefix + "Updated Material.";
-                break;
-            case "updated_title":
-                message = pluginPrefix + "Updated Title.";
-                break;
-            case "invalid_argument":
-                message = pluginPrefix + "Invalid Argument.";
-                break;
-            case "invalid_argument.setMaterial":
-                message = pluginPrefix + "Invalid Argument. Pick between survival/creative/spectator/adventure/empty";
-                break;
-            case "invalid_material.setMaterial":
-                message = pluginPrefix + "Invalid Material. Please hold an item in your main hand!";
-                break;
-            case "incomplete_command.setMaterial":
-                message = pluginPrefix + "Incomplete Command. Use /gmgui material [survival/creative/spectator/adventure/empty]";
-                break;
-            case "invalid_argument.setTitle":
-                message = pluginPrefix + "Invalid Argument. Please type a valid title!";
-                break;
-            case "incomplete_command.setTitle":
-                message = pluginPrefix + "Incomplete Command. Use /gmgui title [title]";
-                break;
-            case "invalid_argument.setName":
-                message = pluginPrefix + "Invalid Argument. Please type a valid name!";
-                break;
-            case "cannot_execute_console":
-                message = pluginPrefix + "You cannot execute the command as console.";
-                break;
-            default:
-                message = pluginPrefix + "Error! Please contact the server owner with the error code. [cannot_locate_message]";
-                break;
-        }
-        return MSG.createMessage(message);
     }
 }
