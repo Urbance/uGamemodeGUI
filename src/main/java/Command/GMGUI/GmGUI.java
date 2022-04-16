@@ -67,7 +67,7 @@ public class GmGUI implements CommandExecutor, TabCompleter {
         return false;
     }
 
-    public static void version(String[] args, Player player) {
+    private static void version(String[] args, Player player) {
         if (!(args.length == 1)) {
             return;
         }
@@ -80,7 +80,7 @@ public class GmGUI implements CommandExecutor, TabCompleter {
         player.sendMessage(MSG.createMessage(pluginPrefix + "Plugin Version &6" + plugin.getDescription().getVersion() + " &7- " + currentVersionStatus));
     }
 
-    public void reload(String[] args, Player player) {
+    private void reload(String[] args, Player player) {
         if (!(args.length == 1)) {
             return;
         }
@@ -91,7 +91,7 @@ public class GmGUI implements CommandExecutor, TabCompleter {
         player.sendMessage(ChatColor.translateAlternateColorCodes('&', pluginPrefix + "&7Configs reloaded"));
     }
 
-    public static void setTitle(String[] args, Player player) {
+    private static void setTitle(String[] args, Player player) {
         if (args.length == 2) {
             yamlConfiguration.set("gui.title", args[1]);
             player.sendMessage(MSG.collection("updated_title"));
@@ -101,7 +101,7 @@ public class GmGUI implements CommandExecutor, TabCompleter {
         }
     }
 
-    public static void setName(String[] args, Player player) {
+    private static void setName(String[] args, Player player) {
         if (!(args.length == 3)) {
             player.sendMessage(MSG.createMessage(pluginPrefix + "&7Incomplete Command. Use /gmgui name [survival/creative/spectator/adventure] (name)"));
             return;
@@ -112,13 +112,29 @@ public class GmGUI implements CommandExecutor, TabCompleter {
             return;
         }
 
-        setName(player, args);
+        switch (args[1]) {
+            case "survival":
+                yamlConfiguration.set("gui.slot.SURVIVAL.name", args[2]);
+                break;
+            case "creative":
+                yamlConfiguration.set("gui.slot.CREATIVE.name", args[2]);
+                break;
+            case "spectator":
+                yamlConfiguration.set("gui.slot.SPECTATOR.name", args[2]);
+                break;
+            case "adventure":
+                yamlConfiguration.set("gui.slot.ADVENTURE.name", args[2]);
+                break;
+            default:
+                player.sendMessage(MSG.collection("invalid_argument.setName"));
+        }
+
         ConfigManagement.save(Main.gui);
         player.sendMessage(MSG.collection("updated_name"));
     }
 
-    public static void setMaterial(String[] args, Player player) {
-        String item = player.getInventory().getItemInMainHand().getType().name();
+    private static void setMaterial(String[] args, Player player) {
+        String itemInMainHand = player.getInventory().getItemInMainHand().getType().name();
         String path = null;
         
         if (args.length == 2) {
@@ -141,7 +157,7 @@ public class GmGUI implements CommandExecutor, TabCompleter {
                 default:
                     player.sendMessage(MSG.collection("invalid_argument.setMaterial"));
             }
-            if (item != "AIR" || item == null) {
+            if (itemInMainHand != "AIR" || itemInMainHand == null) {
                 yamlConfiguration.set(path, player.getInventory().getItemInMainHand().getType().name());
                 player.sendMessage(MSG.collection("updated_material"));
                 ConfigManagement.save(Main.gui);
@@ -149,26 +165,7 @@ public class GmGUI implements CommandExecutor, TabCompleter {
                 player.sendMessage(MSG.collection("invalid_material.setMaterial"));
             }
         } else {
-            player.sendMessage(MSG.collection("incomplete_command.setMaterial"));
-        }
-    }
 
-    private static void setName(CommandSender sender, String[] args) {
-        switch (args[1]) {
-            case "survival":
-                yamlConfiguration.set("gui.slot.SURVIVAL.name", args[2]);
-                break;
-            case "creative":
-                yamlConfiguration.set("gui.slot.CREATIVE.name", args[2]);
-                break;
-            case "spectator":
-                yamlConfiguration.set("gui.slot.SPECTATOR.name", args[2]);
-                break;
-            case "adventure":
-                yamlConfiguration.set("gui.slot.ADVENTURE.name", args[2]);
-                break;
-            default:
-                sender.sendMessage(MSG.collection("invalid_argument.setName"));
         }
     }
 
@@ -193,7 +190,6 @@ public class GmGUI implements CommandExecutor, TabCompleter {
 
         captionChangelog.addExtra(linkChangelog);
         sender.spigot().sendMessage(captionChangelog);
-
 
         TextComponent captionSupport = new TextComponent("§7Get Support: ");
 
