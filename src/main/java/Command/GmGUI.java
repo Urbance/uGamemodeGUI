@@ -30,12 +30,12 @@ public class GmGUI implements CommandExecutor, TabCompleter {
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
         if (cmd.getName().equalsIgnoreCase("gmgui")) {
             if (!(sender instanceof Player)) {
-                MSG.sendError(sender, "CANNOT_EXECUTE_AS_CONSOLE");
+                MSG.sendError(sender.getName(), "CANNOT_EXECUTE_AS_CONSOLE");
                 return false;
             }
 
             if (!(sender.hasPermission("gmgui.*") || sender.hasPermission("gmgui.modify"))) {
-                MSG.sendError(sender, "NO_PERMISSION");
+                MSG.sendError(sender.getName(), "NO_PERMISSION");
                 return false;
             }
 

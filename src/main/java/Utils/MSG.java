@@ -30,19 +30,18 @@ public class MSG {
         Bukkit.getPlayer(playerName).sendMessage(ChatColor.translateAlternateColorCodes('&', pluginPrefix + message));
     }
 
-    public static void sendError(CommandSender sender, String errorType) {
+    public static void sendError(String player, String errorType) {
 
         switch (errorType) {
             case "CANNOT_EXECUTE_AS_CONSOLE":
                 Bukkit.getLogger().info("You cannot execute the command as console.");
                 break;
             case "NO_PERMISSION":
-                sendMessage(sender.getName(), messagesConfiguration.getString("messages.NoPermission"));
+                sendMessage(player, messagesConfiguration.getString("messages.NoPermission"));
                 break;
             default:
-                sendMessage(sender.getName(), "&7Whoops! There is an unknown error!");
+                sendMessage(player, "&7Whoops! There is an unknown error!");
         }
-
     }
 
     public static ItemStack itemStack(String requiredItem) {
