@@ -30,9 +30,9 @@ public class MSG {
         Bukkit.getPlayer(playerName).sendMessage(ChatColor.translateAlternateColorCodes('&', pluginPrefix + message));
     }
 
-    public static void sendError(String player, String errorType) {
+    public static void sendError(String player, String type) {
 
-        switch (errorType) {
+        switch (type) {
             case "CANNOT_EXECUTE_AS_CONSOLE":
                 Bukkit.getLogger().info("You cannot execute the command as console.");
                 break;
