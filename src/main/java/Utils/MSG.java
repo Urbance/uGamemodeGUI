@@ -4,7 +4,6 @@ import de.urbance.main.Main;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
-import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.Plugin;
@@ -26,9 +25,7 @@ public class MSG {
         return ChatColor.translateAlternateColorCodes('&', message);
     }
 
-    public static void sendMessage(String playerName, String message) {
-        Bukkit.getPlayer(playerName).sendMessage(ChatColor.translateAlternateColorCodes('&', pluginPrefix + message));
-    }
+    public static void sendMessage(String playerName, String message) { Bukkit.getPlayer(playerName).sendMessage(ChatColor.translateAlternateColorCodes('&', pluginPrefix + message)); }
 
     public static void sendError(String player, String type) {
 

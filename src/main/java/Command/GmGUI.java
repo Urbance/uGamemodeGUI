@@ -100,7 +100,7 @@ public class GmGUI implements CommandExecutor, TabCompleter {
         }
 
         yamlConfiguration.set("gui.title", args[1]);
-        MSG.sendMessage(player.getName(), "&7Updated Title.");
+        MSG.sendMessage(player.getName(), "&7The GUI has now the title &r" + args[1] + "&7!");
         ConfigManagement.save(Main.gui);
     }
 
@@ -129,7 +129,7 @@ public class GmGUI implements CommandExecutor, TabCompleter {
         }
 
         ConfigManagement.save(Main.gui);
-        MSG.sendMessage(player.getName(), "&7Updated Name.");
+        MSG.sendMessage(player.getName(), "&7Updated name to &r" + args[2] + "&7!");
     }
 
     private static void setMaterial(String[] args, Player player) {
@@ -168,7 +168,7 @@ public class GmGUI implements CommandExecutor, TabCompleter {
         }
 
         yamlConfiguration.set(path, itemInMainHand.getType().name());
-        MSG.sendMessage(player.getName(), "&7Updated Material.");
+        MSG.sendMessage(player.getName(), "&7Updated material to &6" + itemInMainHand.getType().name() + "&7!");
         ConfigManagement.save(Main.gui);
     }
 

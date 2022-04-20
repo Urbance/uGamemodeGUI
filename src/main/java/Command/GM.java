@@ -16,12 +16,10 @@ public class GM implements CommandExecutor {
                 MSG.sendError(sender.getName(), "CANNOT_EXECUTE_AS_CONSOLE");
                 return false;
             }
-
             if (!(sender.hasPermission("gmgui.gm.open") || sender.hasPermission("gmgui.gm.*") || sender.hasPermission("gmgui.*"))) {
                 MSG.sendError(sender.getName(), "NO_PERMISSION");
                 return false;
             }
-
             GUI.openGUI(sender);
         }
         return false;
