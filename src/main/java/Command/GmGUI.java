@@ -110,18 +110,25 @@ public class GmGUI implements CommandExecutor, TabCompleter {
             return;
         }
 
+        String newItemName = args[2];
+
+        if (!newItemName.startsWith("&")) {
+            MSG.sendMessage(player.getName(), "&7Please enter a valid formatting code!");
+            return;
+        }
+
         switch (args[1]) {
             case "survival":
-                yamlConfiguration.set("gui.slot.SURVIVAL.name", args[2]);
+                yamlConfiguration.set("gui.slot.SURVIVAL.name", newItemName);
                 break;
             case "creative":
-                yamlConfiguration.set("gui.slot.CREATIVE.name", args[2]);
+                yamlConfiguration.set("gui.slot.CREATIVE.name", newItemName);
                 break;
             case "spectator":
-                yamlConfiguration.set("gui.slot.SPECTATOR.name", args[2]);
+                yamlConfiguration.set("gui.slot.SPECTATOR.name", newItemName);
                 break;
             case "adventure":
-                yamlConfiguration.set("gui.slot.ADVENTURE.name", args[2]);
+                yamlConfiguration.set("gui.slot.ADVENTURE.name", newItemName);
                 break;
             default:
                 MSG.sendMessage(player.getName(), "&7Invalid Argument! Please use survival/creative/spectator/adventure instead of &6" + args[1] + "&7!");
@@ -129,7 +136,7 @@ public class GmGUI implements CommandExecutor, TabCompleter {
         }
 
         ConfigManagement.save(Main.gui);
-        MSG.sendMessage(player.getName(), "&7Updated name to &r" + args[2] + "&7!");
+        MSG.sendMessage(player.getName(), "&7Updated name to &r" + newItemName + "&7!");
     }
 
     private static void setMaterial(String[] args, Player player) {
